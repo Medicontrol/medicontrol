@@ -1,0 +1,389 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MediControl - Dashboard</title>
+    
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap" rel="stylesheet">
+
+    <style>
+        :root {
+            --bg-light: #f8f9fa;
+            --sidebar-width: 280px; /* Ancho fijo para control absoluto */
+            --primary-blue: #0d6efd;
+            --cian: #0dcaf0;
+        }
+
+        body {
+            background-color: var(--bg-light);
+            font-family: 'Inter', sans-serif;
+            overflow-x: hidden;
+        }
+
+        /* SIDEBAR CORREGIDO */
+        #sidebar {
+            width: var(--sidebar-width);
+            height: 100vh;
+            position: fixed;
+            top: 0;
+            left: 0;
+            z-index: 1000;
+            background-color: #212529; /* bg-dark */
+            overflow-y: auto;
+        }
+
+        /* CONTENIDO PRINCIPAL CORREGIDO */
+        .main-content {
+            margin-left: var(--sidebar-width); /* Empuja el contenido exactamente el ancho del sidebar */
+            width: calc(100% - var(--sidebar-width)); /* El ancho es el total menos el sidebar */
+            padding: 40px;
+            min-height: 100vh;
+        }
+
+        .wave-container svg {
+            width: 100%;
+            height: auto;
+        }
+
+        .nav-link.text-primary {
+            color: var(--cian) !important;
+            border-bottom: 1px solid rgba(13, 202, 240, 0.1);
+            transition: 0.3s;
+        }
+
+        .nav-link.text-primary:hover {
+            background-color: rgba(13, 202, 240, 0.05);
+        }
+
+        /* Ajuste para móviles */
+        @media (max-width: 992px) {
+            #sidebar {
+                transform: translateX(-100%);
+                transition: 0.3s;
+            }
+            .main-content {
+                margin-left: 0;
+                width: 100%;
+                padding: 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- SIDEBAR -->
+    <nav id="sidebar">
+        <div class="wave-container">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 320">
+                <path fill="#2A1C45" d="M0,256L30,250.7C60,245,120,235,180,197.3C240,160,300,96,360,101.3C420,107,480,181,540,197.3C600,213,660,171,720,154.7C780,139,840,149,900,138.7C960,128,1020,96,1080,101.3C1140,107,1200,149,1260,144C1320,139,1380,85,1410,58.7L1440,32L1440,0L1410,0C1380,0,1320,0,1260,0C1200,0,1140,0,1080,0C1020,0,960,0,900,0C840,0,780,0,720,0C660,0,600,0,540,0C480,0,420,0,360,0C300,0,240,0,180,0C120,0,60,0,30,0L0,0Z"></path>
+            </svg>
+        </div>
+        <div class="p-4 pt-0">
+            <h4 class="fw-bold mb-5">
+                <a class="navbar-brand fs-3 text-decoration-none" href="#">
+                    <span style="color: var(--cian);"><i class="fas fa-hand-holding-medical"></i> Medi</span><span class="text-white">Control</span>
+                </a>
+                     {% if user.perfil.foto %}
+        <img src="{{ user.perfil.foto.url }}" class="rounded-circle border border-2 border-info" style="width: 80px; height: 80px; object-fit: cover; align-items: center;">
+    {% else %}
+        <!-- Imagen por defecto si no subió ninguna -->
+        <img src="{% static 'principal/img/vectoravatar.png' %}" class="rounded-circle border border-2 border-info" style="width: 80px; height: 80px;">
+    {% endif %}
+    <p class="text-white mt-2 mb-0 fw-bold">{{ user.username }}</p>
+            </h4>
+
+            <p class="small text-uppercase text-muted fw-bold mb-3">Menu</p>
+            <ul class="nav flex-column">
+                <li class="nav-item mb-2">
+                    <a href="#" class="nav-link text-white fw-medium px-0">
+                        <i class="fas fa-home me-2"></i>Dashboard
+                    </a>
+                </li>
+                <li class="nav-item mb-2">
+                    <a href="" class="nav-link text-primary fw-medium py-3 px-0">
+                        <i class="fas fa-pills me-3"></i>Mis Dosis y tratamientos
+                    </a>
+                </li>
+                <li class="nav-item mb-2">
+                    <a href="" class="nav-link text-primary fw-medium py-3 px-0">
+                        <i class="fas fa-notes-medical me-3"></i>Historial y seguimiento
+                    </a>
+                </li>
+
+                <li class="nav-item mb-2">
+                    <a href="" class="nav-link text-primary fw-medium py-3 px-0">
+                        <i class="fa-solid fa-people-group"></i>Red Familiar
+                    </a>
+                </li>
+
+                <li class="nav-item mb-2">
+                    <a href="" class="nav-link text-primary fw-medium py-3 px-0">
+                        <i class="fa-solid fa-heart-pulse"></i>Mis sugerencias
+                    </a>
+                </li>
+
+            </ul>
+
+            <div class="mt-5">
+                <p class="small text-uppercase text-secondary fw-bold mb-3">General</p>
+                <ul class="nav flex-column">
+                    <li class="nav-item"><a href="#" class="nav-link text-white-50 py-2 px-0 small"><i class="fas fa-cog me-2"></i>Ajustes</a></li>
+                    <li class="nav-item"><a href="{% url 'logout' %}" class="nav-link text-danger py-2 px-0 small"><i class="fas fa-sign-out-alt me-2"></i>Cerrar Sesión</a></li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- CONTENIDO PRINCIPAL -->
+    <main class="main-content">
+
+        
+        <!-- HEADER CON PERFIL DE USUARIO -->
+<div class="d-flex justify-content-between align-items-center mb-5">
+    <div>
+        <h1 class="h2 fw-bold text-dark mb-0">Panel De Control</h1>
+    </div>
+
+    <!-- AQUÍ METEMOS TU CÓDIGO DE USUARIO -->
+    <div class="d-flex align-items-center gap-3 bg-white p-2 pe-3 rounded-pill shadow-sm">
+        <span class="text-dark align-self-center ps-2">Bienvenido, <strong>{{ user.username }}</strong></span>
+        
+        {% if user.perfil.foto %}
+            <img src="{{ user.perfil.foto.url }}" class="rounded-circle border border-info shadow-sm" style="width: 40px; height: 40px; object-fit: cover;">
+        {% else %}
+            <img src="{% static 'principal/img/vectoravatar.png' %}" class="rounded-circle border border-info shadow-sm" style="width: 40px; height: 40px;">
+        {% endif %}
+    </div>
+</div>
+
+        <!-- TARJETAS SUPERIORES -->
+        <div class="row g-4 mb-4">
+            <div class="col-md-4">
+                <div class="card shadow-sm border-0 rounded-4 p-3">
+                    <div class="d-flex align-items-center">
+                        <div class="bg-primary-subtle p-3 rounded-3 me-3 text-primary"><i class="fas fa-pills fs-4"></i></div>
+                        <div><p class="text-muted small mb-0 fw-bold">MEDICAMENTOS</p><h3 class="fw-bold mb-0">08</h3></div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="card shadow-sm border-0 rounded-4 p-3">
+                    <div class="d-flex align-items-center">
+                        <div class="bg-warning-subtle p-3 rounded-3 me-3 text-warning"><i class="fas fa-clock fs-4"></i></div>
+                        <div><p class="text-muted small mb-0 fw-bold">PENDIENTES</p><h3 class="fw-bold mb-0">02</h3></div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="card shadow-sm border-0 rounded-4 p-3">
+                    <div class="d-flex align-items-center">
+                        <div class="bg-info-subtle p-3 rounded-3 me-3 text-info"><i class="fas fa-users fs-4"></i></div>
+                        <div><p class="text-muted small mb-0 fw-bold">RED FAMILIAR</p><h3 class="fw-bold mb-0">05</h3></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- MEDIDOR RENDIMIENTO -->
+        <div class="card shadow-sm border-0 rounded-4 mb-4">
+            <div class="card-body p-4">
+                <div class="row align-items-center">
+                    <div class="col-md-4 text-center border-end">
+                        <div class="d-flex justify-content-center mb-3">
+                            <div class="rounded-circle bg-danger opacity-25 me-2" style="width: 12px; height: 12px;"></div>
+                            <div class="rounded-circle bg-warning opacity-25 me-2" style="width: 12px; height: 12px;"></div>
+                            <div class="rounded-circle bg-success shadow-sm" style="width: 12px; height: 12px;"></div>
+                        </div>
+                        <h6 class="text-muted small fw-bold mb-3 text-uppercase">Tu Rendimiento</h6>
+                        <div class="position-relative mx-auto" style="max-width: 180px;">
+                            <canvas id="gaugeAdherencia"></canvas>
+                            <div class="position-absolute top-100 start-50 translate-middle">
+                                <h2 class="fw-bold text-success mb-0">85%</h2>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-8 ps-md-5">
+                        <div class="alert bg-success-subtle border-0 rounded-4 p-3">
+                            <h5 class="fw-bold text-success mb-1">¡Vas por buen camino!</h5>
+                            <p class="text-success-emphasis small mb-0">Has tomado casi todas tus dosis a tiempo hoy.</p>
+                        </div>
+                        <div class="row mt-4">
+                            <div class="col-6 border-end">
+                                <small class="text-muted d-block fw-bold small">TOMADOS</small>
+                                <span class="fw-bold fs-4">06</span>
+                            </div>
+                            <div class="col-6">
+                                <small class="text-muted d-block fw-bold small">PENDIENTES</small>
+                                <span class="fw-bold fs-4">02</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    <div class="card shadow-sm border-0 rounded-4 mt-4">
+    <div class="card-body p-4">
+        <h5 class="fw-bold mb-4">Actividad de la Semana</h5>
+        <div style="height: 300px;">
+            <canvas id="weeklyChart"></canvas>
+        </div>
+    </div>
+</div>
+
+       <!-- LISTA DE TOMAS (CON TUS BOTONES ORIGINALES) -->
+<div class="card shadow-sm border-0 rounded-4 mt-4">
+    <div class="card-body p-4">
+
+        <div class="d-flex justify-content-between align-items-center mb-3">
+            <h5 class="fw-bold mb-0">Próximas Tomas</h5>
+            <small class="text-muted">Hoy</small>
+        </div>
+
+        <!-- ITEM 1: PRÓXIMO (Estilo de tu archivo original) -->
+        <div class="d-flex align-items-center justify-content-between p-3 rounded-3 mb-3 bg-warning-subtle">
+            <div class="d-flex align-items-center">
+                <div class="me-3 text-warning fs-4">
+                    <i class="fas fa-clock"></i>
+                </div>
+                <div>
+                    <h6 class="fw-bold mb-0">Ibuprofeno 400mg</h6>
+                    <small class="text-muted">1 tableta • En 15 min</small>
+                </div>
+            </div>
+
+            <!-- BOTONES ORIGINALES RESTAURADOS -->
+            <div class="d-flex gap-2">
+                <button class="btn btn-success btn-sm rounded-pill shadow-sm">
+                    <i class="fas fa-check"></i>
+                </button>
+                <button class="btn btn-outline-secondary btn-sm rounded-pill shadow-sm">
+                    <i class="fas fa-clock"></i>
+                </button>
+            </div>
+        </div>
+
+        <!-- ITEM 2: ATRASADO (Estilo de tu archivo original) -->
+        <div class="d-flex align-items-center justify-content-between p-3 rounded-3 mb-3 bg-danger-subtle">
+            <div class="d-flex align-items-center">
+                <div class="me-3 text-danger fs-4">
+                    <i class="fas fa-exclamation-circle"></i>
+                </div>
+                <div>
+                    <h6 class="fw-bold mb-0">Amoxicilina</h6>
+                    <small class="text-muted">1 cápsula • Hace 30 min</small>
+                </div>
+            </div>
+
+            <!-- BOTONES ORIGINALES RESTAURADOS -->
+            <div class="d-flex gap-2">
+                <button class="btn btn-success btn-sm rounded-pill shadow-sm">
+                    <i class="fas fa-check"></i>
+                </button>
+                <button class="btn btn-danger btn-sm rounded-pill shadow-sm">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+        </div>
+
+        <!-- ITEM 3: MÁS TARDE -->
+        <div class="d-flex align-items-center justify-content-between p-3 rounded-3 bg-light">
+            <div class="d-flex align-items-center">
+                <div class="me-3 text-secondary fs-4">
+                    <i class="fas fa-pills"></i>
+                </div>
+                <div>
+                    <h6 class="fw-bold mb-0">Vitamina C</h6>
+                    <small class="text-muted">1 tableta • 2:00 PM</small>
+                </div>
+            </div>
+
+            <div>
+                <button class="btn btn-outline-primary btn-sm rounded-pill shadow-sm">
+                    <i class="fas fa-bell"></i>
+                </button>
+            </div>
+        </div>
+
+    </div>
+</div>
+    </main>
+
+    <script>
+      const ctxGauge = document.getElementById('gaugeAdherencia').getContext('2d');
+    
+    new Chart(ctxGauge, {
+        type: 'doughnut',
+        data: {
+            datasets: [{
+                data: [85, 15], // 85% completado, 15% restante
+                backgroundColor: ['#198754', '#e9ecef'], // Verde éxito y Gris fondo
+                circumference: 180, // Media luna
+                rotation: 270,      // Orientación hacia arriba[cite: 1]
+                cutout: '80%',      // Grosor del anillo
+                borderWidth: 0,
+                borderRadius: 10
+            }]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            aspectRatio: 1.7,
+            plugins: {
+                legend: { display: false },
+                tooltip: { enabled: false }
+            }
+        }
+    });
+
+    // --- 2. CONFIGURACIÓN DEL GRÁFICO DE BARRAS (ACTIVIDAD SEMANAL) ---
+    const ctxWeekly = document.getElementById('weeklyChart').getContext('2d');
+    
+    new Chart(ctxWeekly, {
+        type: 'bar',
+        data: {
+            labels: ['Lun', 'Mar', 'Mié', 'Jue', 'Vie', 'Sáb', 'Dom'], // Días[cite: 1]
+            datasets: [{
+                label: 'Dosis Tomadas',
+                data: [5, 8, 7, 8, 6, 4, 8], // Estos datos los enviarás desde Django luego[cite: 1]
+                backgroundColor: '#6f42c1',   // Color cian del logo[cite: 1]
+                borderRadius: 5,             // Barras redondeadas modernas
+                barThickness: 20             // Grosor de las barras
+            }]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: {
+                legend: { display: false }
+            },
+            scales: {
+                y: {
+                    beginAtZero: true,
+                    grid: {
+                        color: 'rgba(0, 0, 0, 0.05)', // Líneas de guía muy sutiles
+                        drawBorder: false
+                    },
+                    ticks: {
+                        stepSize: 2,
+                        font: { family: 'Inter', size: 11 }
+                    }
+                },
+                x: {
+                    grid: { display: false }, // Sin líneas verticales para limpieza[cite: 1]
+                    ticks: {
+                        font: { family: 'Inter', size: 11, weight: '600' }
+                    }
+                }
+            }
+        }
+    });
+    </script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

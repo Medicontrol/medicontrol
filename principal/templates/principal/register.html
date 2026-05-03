@@ -1,0 +1,150 @@
+{% extends 'principal/base.html' %}
+
+{% block content %}
+
+
+<div class="container mt-5" >
+  <div class="row justify-content-center">
+    <div class="col-md-6">
+      <div class="card shadow-lg border-0">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 320">
+                <path fill="#2A1C45" d="M0,256L30,250.7C60,245,120,235,180,197.3C240,160,300,96,360,101.3C420,107,480,181,540,197.3C600,213,660,171,720,154.7C780,139,840,149,900,138.7C960,128,1020,96,1080,101.3C1140,107,1200,149,1260,144C1320,139,1380,85,1410,58.7L1440,32L1440,0L1410,0C1380,0,1320,0,1260,0C1200,0,1140,0,1080,0C1020,0,960,0,900,0C840,0,780,0,720,0C660,0,600,0,540,0C480,0,420,0,360,0C300,0,240,0,180,0C120,0,60,0,30,0L0,0Z"></path>
+            </svg>
+        <div class="card-body p-5" >
+          <h2 class="text-center mb-4" style="color: #008080;">Registro de Usuario</h2>
+          <p class="text-center text-muted">Únete a MediControl para gestionar tus tratamientos.</p>
+          
+          <form method="POST" id="registerForm" action="{% url 'register' %}" enctype="multipart/form-data">
+            
+            {% csrf_token %}
+              
+        
+            
+            <div class="row">
+             
+              <div class="col-md-6 mb-3">
+                <label class="form-label font-weight-bold">Usuario</label>
+                <input type="text" class="form-control" name="username" placeholder="Ej: daniel123" required>
+              </div>
+              <div class="col-md-6 mb-3">
+                <label class="form-label font-weight-bold">Correo</label>
+                <input type="email" class="form-control" name="email" placeholder="correo@ejemplo.com" required>
+              </div>
+            </div>
+
+            <div class="mb-3">
+              <label class="form-label font-weight-bold">Contraseña</label>
+              <div class="input-group">
+                <input type="password" class="form-control" name="password1" id="password1" required>
+                <button type="button" class="btn btn-outline-secondary" id="togglePassword1">👁️</button>
+              </div>
+              <div class="progress mt-2" style="height: 8px;">
+                <div id="passwordStrengthBar" class="progress-bar" role="progressbar" style="width: 0%;"></div>
+              </div>
+              <small id="passwordStrengthText" class="form-text"></small>
+            </div>
+
+            <div class="mb-3">
+              <label class="form-label font-weight-bold">Confirmar Contraseña</label>
+              <div class="input-group">
+                <input type="password" class="form-control" name="password2" id="password2" required>
+                <button type="button" class="btn btn-outline-secondary" id="togglePassword2">👁️</button>
+              </div>
+              <small id="passwordError" class="text-danger font-weight-bold"></small>
+            </div>
+
+            <div class="col-md-6 mb-3">
+                <label class="form-label font-weight-bold">Tu foto: </label>
+                <input type="file" class="form-control" name="foto" placeholder="sube tu archivo" required>
+              </div>
+            </div>
+
+            <div class="d-grid gap-2 mb-3">
+              <button type="submit" class="btn btn-success btn-lg">Registrarse ahora</button>
+            </div>
+            
+            <p class="text-center mt-3">
+                ¿Ya tienes una cuenta? <a href="{% url 'index' %}" style="color: #008080; text-decoration: none; font-weight: bold;">Inicia sesión aquí</a>
+            </p> <br>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+  const password1 = document.getElementById('password1');
+  const password2 = document.getElementById('password2');
+  const passwordError = document.getElementById('passwordError');
+  const form = document.getElementById('registerForm');
+  const strengthBar = document.getElementById('passwordStrengthBar');
+  const strengthText = document.getElementById('passwordStrengthText');
+
+  // Lógica para mostrar/ocultar contraseña
+  document.getElementById('togglePassword1').addEventListener('click', function () {
+    const type = password1.getAttribute('type') === 'password' ? 'text' : 'password';
+    password1.setAttribute('type', type);
+    this.textContent = type === 'password' ? '👁️' : '🙈';
+  });
+
+  document.getElementById('togglePassword2').addEventListener('click', function () {
+    const type = password2.getAttribute('type') === 'password' ? 'text' : 'password';
+    password2.setAttribute('type', type);
+    this.textContent = type === 'password' ? '👁️' : '🙈';
+  });
+
+  // Validar coincidencia 
+  password2.addEventListener('keyup', function () {
+    passwordError.textContent = (password1.value !== password2.value) ? '⚠ Las contraseñas no coinciden' : '';
+  });
+
+  password1.addEventListener('keyup', function () {
+    const val = password1.value;
+    let strength = 0;
+    if (val.length >= 6) strength++;
+    if (/[A-Z]/.test(val)) strength++;
+    if (/[0-9]/.test(val)) strength++;
+    if (/[@$!%*?&#]/.test(val)) strength++;
+
+    if (strength === 0) {
+      strengthBar.style.width = '0%'; strengthText.textContent = '';
+    } else if (strength <= 1) {
+      strengthBar.style.width = '33%'; strengthBar.className = 'progress-bar bg-danger'; strengthText.textContent = 'Contraseña débil';
+    } else if (strength == 2) {
+      strengthBar.style.width = '66%'; strengthBar.className = 'progress-bar bg-warning'; strengthText.textContent = 'Contraseña media';
+    } else {
+      strengthBar.style.width = '100%'; strengthBar.className = 'progress-bar bg-success'; strengthText.textContent = 'Contraseña fuerte';
+    }
+  });
+
+
+  form.addEventListener('submit', function (event) {
+    event.preventDefault();
+    if (password1.value !== password2.value) {
+      Swal.fire({
+        icon: 'error',
+        title: '¡Error!',
+        text: 'Las contraseñas no coinciden.',
+        confirmButtonColor: '#008080'
+      });
+      return;
+    }
+    
+    Swal.fire({
+      title: '¿Confirmar registro?',
+      text: "Tus datos se guardarán en el sistema de MediControl.",
+      icon: 'question',
+      showCancelButton: true,
+      confirmButtonColor: '#28a745',
+      cancelButtonColor: '#d33',
+      confirmButtonText: 'Sí, registrarme',
+      cancelButtonText: 'Cancelar'
+    }).then((result) => {
+      if (result.isConfirmed) {
+        form.submit();
+      }
+    });
+  });
+</script>
+{% endblock %}

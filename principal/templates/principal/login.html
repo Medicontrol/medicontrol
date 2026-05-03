@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login Usuariot</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body class="bg-light d-flex align-items-center justify-content-center vh-100">
+    
+    <div class="card p-4 shadow" style="max-width: 400px; width: 100%;">
+         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 320">
+            <path fill="#2A1C45" d="M0,256L30,250.7C60,245,120,235,180,197.3C240,160,300,96,360,101.3C420,107,480,181,540,197.3C600,213,660,171,720,154.7C780,139,840,149,900,138.7C960,128,1020,96,1080,101.3C1140,107,1200,149,1260,144C1320,139,1380,85,1410,58.7L1440,32L1440,0L1410,0C1380,0,1320,0,1260,0C1200,0,1140,0,1080,0C1020,0,960,0,900,0C840,0,780,0,720,0C660,0,600,0,540,0C480,0,420,0,360,0C300,0,240,0,180,0C120,0,60,0,30,0L0,0Z"></path>
+        </svg>
+        
+        <div class="card-body">
+            <h2 class="text-center mb-4">MediControl</h2>
+       <form>
+  <div class="mb-3">
+    <label for="exampleInputEmail1" class="form-label">Usuario</label>
+    <input type="text" name="usuario" class="form-control"  aria-describedby="emailHelp">
+   
+  </div>
+  <div class="mb-3">
+    <label for="exampleInputPassword1" class="form-label">Contraseña</label>
+    <input type="password" name="contraseña" class="form-control" >
+  </div>
+ 
+  <button type="submit" class="btn btn-outline-info">Submit</button>
+</form>
+       <div class="text-center mt-3">
+                <a href="{% url 'index' %}" class="text-decoration-none small text-muted">← Volver al inicio</a>
+            </div>
+    </div>
+    
+</body>
+</html>
