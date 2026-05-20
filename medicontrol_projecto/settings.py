@@ -150,3 +150,7 @@ SOCIALACCOUNT_PROVIDERS = {
 }
 
 FIREBASE_CONFIG_PATH = os.path.join(BASE_DIR, 'firebase-auth.json')
+
+STATIC_URL = 'static/'
+STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
+STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
