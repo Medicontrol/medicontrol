@@ -1,0 +1,341 @@
+{% extends 'principal/base.html' %}
+{% load static %}
+
+{% block content %}
+<link rel="stylesheet" href="{% static 'principal/css/historial_familiar.css' %}">
+
+<button class="btn-hamburger" onclick="toggleSidebar()">
+    <i class="fas fa-bars"></i>
+</button>
+
+<div class="overlay" id="overlay" onclick="cerrarSidebar()"></div>
+
+<nav id="sidebar">
+    <div class="wave-container">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 320">
+            <path fill="#2A1C45"
+                  d="M0,256L30,250.7C60,245,120,235,180,197.3C240,160,300,96,360,101.3C420,107,480,181,540,197.3C600,213,660,171,720,154.7C780,139,840,149,900,138.7C960,128,1020,96,1080,101.3C1140,107,1200,149,1260,144C1320,139,1380,85,1410,58.7L1440,32L1440,0Z">
+            </path>
+        </svg>
+    </div>
+
+    <div class="p-4 pt-0">
+        <h4 class="fw-bold mb-5">
+            <a class="navbar-brand fs-3 text-decoration-none" href="#">
+                <span style="color:var(--cian)">
+                    <i class="fas fa-hand-holding-medical"></i> Medi
+                </span>
+                <span class="text-white">Control</span>
+            </a>
+
+            {% if user.perfil.foto %}
+                <img src="{{ user.perfil.foto.url }}"
+                     class="rounded-circle border border-2 border-info d-block mx-auto mt-3"
+                     style="width:80px;height:80px;object-fit:cover;">
+            {% else %}
+                <img src="{% static 'principal/img/vectoravatar.png' %}"
+                     class="rounded-circle border border-2 border-info d-block mx-auto mt-3"
+                     style="width:80px;height:80px;">
+            {% endif %}
+
+            <p class="text-white text-center mt-2 mb-0 fw-bold">
+                {{ user.username }}
+            </p>
+        </h4>
+
+        <ul class="nav flex-column">
+            <li class="nav-item mb-2">
+                <a href="{% url 'index' %}" class="nav-link text-white fw-medium">
+                    <i class="fas fa-home me-2"></i> Dashboard
+                </a>
+            </li>
+
+            <li class="nav-item mb-2">
+                <a href="{% url 'crear_medicamento' %}" class="nav-link text-white fw-medium">
+                    <i class="fas fa-pills me-2"></i> Mis Dosis y Tratamientos
+                </a>
+            </li>
+
+            <li class="nav-item mb-2">
+                <a href="{% url 'historial' %}" class="nav-link text-white fw-medium">
+                    <i class="fas fa-notes-medical me-2"></i> Historial y seguimiento
+                </a>
+            </li>
+
+            <li class="nav-item mb-2">
+                <a href="{% url 'red_familiar' %}" class="nav-link text-primary fw-bold">
+                    <i class="fa-solid fa-people-group me-2"></i> Red Familiar
+                </a>
+            </li>
+
+            <li class="nav-item mb-2">
+                <a href="{% url 'sugerutinas' %}" class="nav-link text-white fw-medium">
+                    <i class="fa-solid fa-heart-pulse me-2"></i> Mis sugerencias
+                </a>
+            </li>
+
+            <li class="nav-item mt-4">
+                <a href="{% url 'logout' %}" class="nav-link text-white-50">
+                    <i class="fas fa-sign-out-alt me-2"></i> Cerrar Sesión
+                </a>
+            </li>
+        </ul>
+    </div>
+
+    <div class="menu-item mt-3">
+        <a href="javascript:void(0)" data-bs-toggle="modal" data-bs-target="#modalTelegram" 
+           style="text-decoration: none; color: #fff; font-size: 14px; display: flex; align-items: center; padding: 10px 20px;">
+            <i class="fab fa-telegram-plane me-2" style="color: #0088cc; font-size: 1.2rem;"></i>
+            <span>Vincular Telegram</span>
+        </a>
+    </div>
+</nav>
+
+<div class="main-wrapper">
+    <div class="container-fluid">
+        <div class="d-flex justify-content-between align-items-center mb-4">
+            <div>
+                <h2 class="text-white">
+                    <i class="fas fa-chart-line text-info me-2"></i> 
+                    Seguimiento: {{ familiar.username|capfirst }}
+                </h2>
+                <p class="text-white-50 small mt-2">
+                    <i class="fas fa-calendar-alt me-1"></i> 
+                    Mostrando desde: {{ fecha_desde }} hasta: {{ fecha_hasta }}
+                </p>
+            </div>
+            <a href="{% url 'red_familiar' %}" class="btn btn-outline-light btn-sm">
+                <i class="fas fa-arrow-left me-1"></i> Volver a la Red
+            </a>
+        </div>
+
+        <div class="row">
+            <div class="col-md-8">
+                <div class="card shadow" id="progresotomas">
+                    <div class="card-body p-4">
+                        <h5 class="text-white mb-4">
+                            <i class="fas fa-chart-line me-2"></i>
+                            Progreso de Tomas ({{ fecha_desde }} - {{ fecha_hasta }})
+                        </h5>
+                        <div style="height: 350px;">
+                            <canvas id="graficaDetallada"></canvas>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-4">
+                <div class="card shadow" id="monitoreo">
+                    <div class="card-body">
+                        <h5><i class="fas fa-info-circle text-info me-2"></i> Resumen</h5>
+                        <hr class="hr">
+                        
+                        <div class="mb-3">
+                            <span class="d-block small text-muted">Período de monitoreo:</span>
+                            <strong class="text-info">{{ fecha_desde }} - {{ fecha_hasta }}</strong>
+                        </div>
+                        
+                        <div class="mb-3">
+                            <span class="d-block small text-muted">Total de tomas en el período:</span>
+                            <strong class="text-success" id="totalTomados">✓ 0 tomadas</strong><br>
+                            <strong class="text-danger" id="totalOmitidos">✗ 0 omitidas</strong>
+                        </div>
+                        
+                        <div class="p-3 mb-2" id="spanestado">
+                            <span class="d-block small">Estado Actual:</span>
+                            <strong class="text-info">Monitoreo Activo</strong>
+                        </div>
+                        
+                        <hr class="hr">
+                        <div class="text-center">
+                            <small class="text-muted">
+                                <i class="fas fa-sync-alt me-1"></i>
+                                Actualizado: {% now "d/m/Y H:i" %}
+                            </small>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        
+        <div class="row mt-4">
+            <div class="col-12">
+                <div class="card shadow">
+                    <div class="card-body">
+                        <h5 class="text-white mb-3">
+                            <i class="fas fa-history me-2"></i>
+                            Historial Detallado
+                        </h5>
+                        <div class="table-responsive">
+                            <table class="table table-dark table-hover">
+                                <thead>
+                                    <tr>
+                                        <th>Medicamento</th>
+                                        <th>Fecha y Hora</th>
+                                        <th>Estado</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {% for h in historial %}
+                                    <tr>
+                                        <td>{{ h.medicamento.nombre }}</td>
+                                        <td>{{ h.fecha_hora|date:"d/m/Y H:i" }}</td>
+                                        <td>
+                                            <span class="state-tag {{ h.estado }}">
+                                                {{ h.estado|capfirst }}
+                                            </span>
+                                        </td>
+                                    </tr>
+                                    {% empty %}
+                                    <tr>
+                                        <td colspan="3" class="text-center">No hay registros en este período.</td>
+                                    </tr>
+                                    {% endfor %}
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script>
+    // Datos desde Django
+    const labels = {{ labels|safe }};
+    const tomados = {{ data|safe }};
+    const omitidos = {{ data_omitidos|safe }};
+    
+    // Calcular totales
+    const totalTomados = tomados.reduce((a, b) => a + b, 0);
+    const totalOmitidos = omitidos.reduce((a, b) => a + b, 0);
+    
+    // Actualizar totales en el resumen
+    document.getElementById('totalTomados').innerHTML = `✓ ${totalTomados} tomadas`;
+    document.getElementById('totalOmitidos').innerHTML = `✗ ${totalOmitidos} omitidas`;
+    
+    // Configurar Chart.js
+    const ctx = document.getElementById('graficaDetallada').getContext('2d');
+    const maxValue = Math.max(...tomados, ...omitidos, 1);
+    
+    new Chart(ctx, {
+        type: 'bar',
+        data: {
+            labels: labels,
+            datasets: [
+                {
+                    label: '✅ Dosis Tomadas',
+                    data: tomados,
+                    borderColor: '#22c55e',
+                    backgroundColor: 'rgba(34, 197, 94, 0.6)',
+                    borderWidth: 2,
+                    borderRadius: 8,
+                    barPercentage: 0.7,
+                    categoryPercentage: 0.8
+                },
+                {
+                    label: '❌ Dosis Omitidas',
+                    data: omitidos,
+                    borderColor: '#ef4444',
+                    backgroundColor: 'rgba(239, 68, 68, 0.6)',
+                    borderWidth: 2,
+                    borderRadius: 8,
+                    barPercentage: 0.7,
+                    categoryPercentage: 0.8
+                }
+            ]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: {
+                legend: {
+                    display: true,
+                    position: 'top',
+                    labels: { 
+                        color: '#fff',
+                        font: { size: 12 }
+                    }
+                },
+                tooltip: {
+                    mode: 'index',
+                    intersect: false,
+                    callbacks: {
+                        label: function(context) {
+                            return context.dataset.label + ': ' + context.raw;
+                        }
+                    }
+                }
+            },
+            scales: {
+                y: {
+                    beginAtZero: true,
+                    max: maxValue + 1,
+                    grid: { color: 'rgba(255,255,255,0.1)' },
+                    ticks: { 
+                        color: '#fff', 
+                        stepSize: 1,
+                        precision: 0
+                    },
+                    title: {
+                        display: true,
+                        text: 'Número de Dosis',
+                        color: '#fff'
+                    }
+                },
+                x: {
+                    grid: { display: false },
+                    ticks: { 
+                        color: '#fff',
+                        maxRotation: 45,
+                        minRotation: 45
+                    }
+                }
+            }
+        }
+    });
+</script>
+
+<script>
+    function toggleSidebar(){
+        document.getElementById('sidebar').classList.toggle('abierto');
+        document.getElementById('overlay').classList.toggle('activo');
+    }
+
+    function cerrarSidebar(){
+        document.getElementById('sidebar').classList.remove('abierto');
+        document.getElementById('overlay').classList.remove('activo');
+    }
+</script>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+
+<div class="modal fade" id="modalTelegram" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content" style="background-color: #2c2c3e; color: white; border-radius: 20px;">
+            <div class="modal-header" style="border-bottom: 1px solid #444;">
+                <h5 class="modal-title"><i class="fab fa-telegram me-2"></i>Configurar Notificaciones</h5>
+                <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
+            </div>
+            <div class="modal-body">
+                <p class="small">Sigue estos pasos para recibir alertas en tu celular:</p>
+                <ol class="small">
+                    <li>Escribe a <a href="https://t.me/Medicontrol_friend_bot" target="_blank" class="text-info">@Medicontrol_friend_bot</a> e inicia el chat.</li>
+                    <li>Usa el bot <a href="https://t.me/userinfobot" target="_blank" class="text-info">@userinfobot</a> para obtener tu ID.</li>
+                </ol>
+                <form method="POST" action="{% url 'actualizar_telegram' %}">
+                    {% csrf_token %}
+                    <div class="mb-3">
+                        <label class="form-label small">Tu ID de Telegram:</label>
+                        <input type="text" name="telegram_id" class="form-control" style="background: #1a1a2e; color: white; border: 1px solid #444;" placeholder="Ej: 7814421996" value="{{ user.perfil.telegram_id|default:'' }}">
+                    </div>
+                    <button type="submit" class="btn btn-primary w-100" style="border-radius: 10px;">Guardar Configuración</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

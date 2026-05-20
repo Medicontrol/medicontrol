@@ -1,0 +1,191 @@
+
+{% load static %}
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sugerencias - MediControl</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap" rel="stylesheet">
+        <link rel="stylesheet" href="{% static 'principal/css/sugerutinas.css' %}">
+    
+</head>
+<body>
+    <button class="btn-hamburger" onclick="toggleSidebar()">
+    <i class="fas fa-bars"></i>
+</button>
+<div class="overlay" id="overlay" onclick="cerrarSidebar()"></div>
+
+
+<nav id="sidebar">
+    <div class="wave-container">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 320">
+            <path fill="#2A1C45" d="M0,256L30,250.7C60,245,120,235,180,197.3C240,160,300,96,360,101.3C420,107,480,181,540,197.3C600,213,660,171,720,154.7C780,139,840,149,900,138.7C960,128,1020,96,1080,101.3C1140,107,1200,149,1260,144C1320,139,1380,85,1410,58.7L1440,32L1440,0L1410,0C1380,0,1320,0,1260,0C1200,0,1140,0,1080,0C1020,0,960,0,900,0C840,0,780,0,720,0C660,0,600,0,540,0C480,0,420,0,360,0C300,0,240,0,180,0C120,0,60,0,30,0L0,0Z"></path>
+        </svg>
+    </div>
+    <div class="p-4 pt-0">
+        <h4 class="fw-bold mb-5">
+            <a class="navbar-brand fs-3 text-decoration-none" href="#">
+                <span style="color:var(--cian)"><i class="fas fa-hand-holding-medical"></i> Medi</span><span class="text-white">Control</span>
+            </a>
+            {% if user.perfil.foto %}
+                <img src="{{ user.perfil.foto.url }}" class="rounded-circle border border-2 border-info d-block mx-auto mt-3" style="width:80px;height:80px;object-fit:cover;">
+            {% else %}
+                <img src="{% static 'principal/img/vectoravatar.png' %}" class="rounded-circle border border-2 border-info d-block mx-auto mt-3" style="width:80px;height:80px;">
+            {% endif %}
+            <p class="text-white text-center mt-2 mb-0 fw-bold">{{ user.username }}</p>
+        </h4>
+
+        <p class="small text-uppercase text-muted fw-bold mb-3">Menu</p>
+        <ul class="nav flex-column">
+            <li class="nav-item mb-2">
+                <a href="{% url 'index' %}" class="nav-link text-white fw-medium px-0">
+                    <i class="fas fa-home me-2"></i>Dashboard
+                </a>
+            </li>
+            <li class="nav-item mb-2">
+                <a href="{% url 'crear_medicamento' %}" class="nav-link text-white fw-medium py-3 px-0">
+                    <i class="fas fa-pills me-3"></i>Mis Dosis y tratamientos
+                </a>
+            </li>
+            <li class="nav-item mb-2">
+                <a href="{% url 'historial' %}" class="nav-link text-white fw-medium py-3 px-0">
+                    <i class="fas fa-notes-medical me-3"></i>Historial y seguimiento
+                </a>
+            </li>
+            <li class="nav-item mb-2">
+                <a href="{% url 'red_familiar' %}" class="nav-link text-white fw-medium py-3 px-0">
+                    <i class="fa-solid fa-people-group me-3"></i>Red Familiar
+                </a>
+            </li>
+            <li class="nav-item mb-2">
+                <a href="{% url 'sugerutinas' %}" class="nav-link text-primary fw-medium py-3 px-0">
+                    <i class="fa-solid fa-heart-pulse me-3"></i>Mis sugerencias
+                </a>
+            </li>
+        </ul>
+        <div class="mt-5">
+            <p class="small text-uppercase text-secondary fw-bold mb-3">General</p>
+            <ul class="nav flex-column">
+                <li class="nav-item"><a href="#" class="nav-link text-white-50 py-2 px-0 small"><i class="fas fa-cog me-2"></i>Ajustes</a></li>
+                <li class="nav-item"><a href="{% url 'logout' %}" class="nav-link text-primary py-2 px-0 small"><i class="fas fa-sign-out-alt me-2"></i>Cerrar Sesión</a></li>
+            </ul>
+        </div>
+    </div>
+
+     <div class="menu-item mt-3">
+        <a href="javascript:void(0)" data-bs-toggle="modal" data-bs-target="#modalTelegram" style="text-decoration: none; color: #fff; font-size: 14px; display: flex; align-items: center; padding: 10px 20px;">
+            <i class="fab fa-telegram-plane me-2" style="color: #0088cc; font-size: 1.2rem;"></i>
+            <span>Vincular Telegram</span>
+        </a>
+    </div>
+</nav>
+
+
+<main class="main-content">
+
+    
+    <div class="d-flex justify-content-between align-items-center mb-4 p-4 rounded-4 shadow-sm"
+         style="background:rgba(20,10,60,0.6);backdrop-filter:blur(12px);border:1px solid rgba(124,58,237,0.4);">
+        <div>
+            <h1 class="h3 fw-bold mb-0 text-white">
+                <i class="fa-solid fa-heart-pulse me-2" style="color:var(--cian)"></i>Sugerencias y Alertas
+            </h1>
+            <small style="color:rgba(255,255,255,0.6)">Recomendaciones personalizadas para ti</small>
+        </div>
+        <div class="d-flex align-items-center gap-3 p-2 pe-3 rounded-pill"
+             style="background:rgba(255,255,255,0.08);">
+            <span style="color:#e2e8f0">Bienvenido, <strong>{{ user.username }}</strong></span>
+            <img src="{% static 'principal/img/vectoravatar.png' %}" class="rounded-circle border border-info" style="width:40px;">
+        </div>
+    </div>
+
+    <div class="row g-4">
+
+      
+        <div id="ver-clima" class="clima-container shadow-sm mb-4" 
+     style="background: linear-gradient(135deg, #4F46E5, #161b47); border-radius: 20px; padding: 25px; display: flex; justify-content: space-between; align-items: center; color: white;">
+    <div class="d-flex align-items-center">
+        <i class="fas fa-spinner fa-spin me-3"></i>
+        <span>Cargando clima de Montería...</span>
+    </div>
+</div>
+        <div class="col-md-6">
+            <div class="ficha rutina text-center">
+                <h3 class="text-start"><i class="fas fa-tint me-2" style="color:var(--cian)"></i>Hidratación</h3>
+                <img src="https://cdn-icons-png.flaticon.com/512/3717/3717054.png" alt="agua">
+                <p>Toma agua con cada medicina, especialmente con el calor de hoy.</p>
+            </div>
+        </div>
+
+
+        {% if alertas_stock %}
+            {% for med in alertas_stock %}
+            <div class="col-md-6">
+                <div class="ficha stock">
+                    <h3><i class="fas fa-exclamation-triangle me-2" style="color:#ef4444"></i>Poco Stock</h3>
+                    <p>Quedan <span class="stock-num">{{ med.stock }}</span> unidades de <strong>{{ med.nombre }}</strong>.</p>
+                    <small class="mt-2 d-block">Considera conseguir más pronto.</small>
+                </div>
+            </div>
+            {% endfor %}
+        {% else %}
+            <div class="col-md-6">
+                <div class="ficha ok">
+                    <h3><i class="fas fa-check-circle me-2" style="color:#22c55e"></i>Inventario al día</h3>
+                    <p>Tienes suficientes dosis de todos tus medicamentos.</p>
+                </div>
+            </div>
+        {% endif %}
+
+       
+        
+
+    </div>
+</main>
+
+<script>
+    const CLAVE  = '8fd3eceb87c621ad73c940e9415f92ea';
+    const CIUDAD = 'Montería,CO';
+
+    fetch(`https://api.openweathermap.org/data/2.5/weather?q=${CIUDAD}&appid=${CLAVE}&units=metric&lang=es`)
+        .then(res => res.json())
+        .then(d => {
+            const temp = Math.round(d.main.temp);
+            const desc = d.weather[0].description;
+            const aviso = temp >= 31
+                ? `<p style="color:#fde68a;font-size:13px;margin-top:8px;"> Calor fuerte. Protege tus medicinas del sol.</p>`
+                : '';
+
+            document.getElementById('ver-clima').innerHTML = `
+                <div>
+                    <i class="fas fa-cloud-sun" style="font-size:3rem;opacity:0.9;"></i>
+                    <p class="mb-0 fw-bold mt-1" style="text-transform:capitalize;">${desc}</p>
+                </div>
+                <div class="datos-derecha">
+                    <p class="mb-0 small" style="opacity:0.8;">Montería, CO</p>
+                    <p class="temp-grande">${temp}°C</p>
+                    ${aviso}
+                </div>
+            `;
+        })
+        .catch(() => {
+            document.getElementById('ver-clima').innerHTML = '<span style="opacity:0.7;">Clima no disponible.</span>';
+        });
+</script>
+<script>
+    function toggleSidebar() {
+        document.getElementById('sidebar').classList.toggle('abierto');
+        document.getElementById('overlay').classList.toggle('activo');
+    }
+    function cerrarSidebar() {
+        document.getElementById('sidebar').classList.remove('abierto');
+        document.getElementById('overlay').classList.remove('activo');
+    }
+</script>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

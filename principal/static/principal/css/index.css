@@ -1,0 +1,714 @@
+:root {
+    --bg-dark: #ccd3e6;
+    --onda-color: #2A1C45;
+    --cian: #22D3EE;
+    --menta: #34D399;
+    --purpura: #7C3AED;
+}
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    background-color: var(--bg-dark);
+    color: white;
+    font-family: 'Segoe UI', sans-serif;
+    overflow-x: hidden;
+}
+
+.logo-font {
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 900;
+    text-transform: uppercase;
+    letter-spacing: -1px;
+}
+
+.wave-container {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    z-index: -1;
+    line-height: 0;
+}
+
+.btn-menta {
+    background-color: var(--menta);
+    color: #2A1C45;
+    font-weight: bold;
+    border-radius: 10px;
+    padding: 12px 30px;
+    border: none;
+    transition: transform 0.2s;
+}
+
+.btn-menta:hover {
+    transform: translateY(-2px);
+}
+
+.hero-title {
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 900;
+    font-size: 4rem;
+    line-height: 1;
+}
+
+.text-gradient {
+    background: linear-gradient(to right, var(--cian), var(--purpura));
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+.card-glass {
+    background: rgba(255, 255, 255, 0.05);
+    backdrop-filter: blur(15px);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 30px;
+    padding: 30px;
+}
+
+.stat-box {
+    background: #1e293b;
+    border-radius: 15px;
+    padding: 15px;
+}
+
+html { 
+    scroll-behavior: smooth; 
+}
+
+.adn-background {
+    background-image: url("../img/bannerMedical.png");
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: center;
+    min-height: 400px;
+}
+
+.seccion-modulos { 
+    padding: 50px 0; 
+    text-align: center; 
+}
+
+.titulo-principal h2 { 
+    color: #2A1C45; 
+    font-size: 32px; 
+    font-weight: 900; 
+    margin-bottom: 20px; 
+}
+
+.contenedor-cajas {
+    display: grid !important;
+    grid-template-columns: repeat(5, 1fr) !important;
+    gap: 15px !important;
+    padding: 40px 20px;
+    position: relative;
+    z-index: 10;
+    max-width: 1300px;
+    margin: 0 auto;
+}
+
+.caja {
+    background: rgba(255, 255, 255, 0.2);
+    backdrop-filter: blur(12px);
+    border: 1px solid rgba(255, 255, 255, 0.4);
+    border-radius: 25px;
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-between;
+    text-align: center;
+    min-height: 420px;
+    transition: transform 0.3s ease;
+}
+
+.caja:hover { 
+    transform: translateY(-8px); 
+    box-shadow: 0 10px 20px rgba(0,0,0,0.1); 
+}
+
+.personaje { 
+    width: 100%; 
+    height: 120px; 
+    display: flex; 
+    justify-content: center; 
+    align-items: flex-end; 
+    margin-bottom: 10px; 
+}
+
+.personaje img { 
+    max-height: 100%; 
+    max-width: 100%; 
+    object-fit: contain; 
+}
+
+.icono { 
+    width: 60px; 
+    height: 60px; 
+    border-radius: 50%; 
+    display: flex; 
+    align-items: center; 
+    justify-content: center; 
+    font-size: 24px; 
+    margin-bottom: 15px; 
+}
+
+.color1 { 
+    background: rgba(0, 128, 128, 0.1); 
+    color: #008080; 
+}
+
+.color2 { 
+    background: rgba(42, 28, 69, 0.1); 
+    color: #2A1C45; 
+}
+
+.caja h3 { 
+    color: #2A1C45; 
+    font-weight: 800; 
+    margin-top: 10px; 
+}
+
+.caja p { 
+    color: #555; 
+    font-size: 0.95rem; 
+}
+
+.btn-login-custom {
+    background: linear-gradient(135deg, #7C3AED 0%, #0dcaf0 100%);
+    color: white;
+    border: none;
+    padding: 12px;
+    border-radius: 10px;
+    font-weight: 600;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 15px rgba(124, 58, 237, 0.3);
+}
+
+.btn-login-custom:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(124, 58, 237, 0.5);
+    filter: brightness(1.1);
+}
+
+/* ============================================ */
+/*         MOCKUP DE TELÉFONOS - CORREGIDO      */
+/* ============================================ */
+
+.mockup-section {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 30px;
+    padding: 40px 20px;
+    flex-wrap: nowrap;
+}
+
+.phone {
+    width: 280px;
+    height: 550px;
+    background: #1e293b;
+    border-radius: 36px;
+    border: 6px solid #334155;
+    box-shadow: 0 25px 50px rgba(0,0,0,0.4);
+    overflow: hidden;
+    transition: 0.3s;
+    position: relative;
+    flex-shrink: 0;
+}
+
+.phone::before {
+    content: '';
+    position: absolute;
+    top: 10px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 60px;
+    height: 12px;
+    background: #0f172a;
+    border-radius: 20px;
+    z-index: 10;
+}
+
+.phone:hover {
+    transform: scale(1.02);
+    z-index: 3;
+}
+
+.phone.featured {
+    transform: scale(1.05);
+    z-index: 2;
+}
+
+.phone.featured:hover {
+    transform: scale(1.08);
+}
+
+.phone-screen {
+    width: 100%;
+    height: 100%;
+    overflow-y: auto;
+    overflow-x: hidden;
+    scrollbar-width: thin;
+}
+
+.phone-screen::-webkit-scrollbar {
+    width: 3px;
+}
+
+.phone-screen::-webkit-scrollbar-track {
+    background: #334155;
+}
+
+.phone-screen::-webkit-scrollbar-thumb {
+    background: #0dcaf0;
+    border-radius: 10px;
+}
+
+.phone-screen img {
+    width: 100%;
+    height: auto;
+    min-height: 100%;
+    object-fit: cover;
+    display: block;
+}
+
+/* ============================================ */
+/*         FORMULARIO LOGIN                     */
+/* ============================================ */
+
+#login-section {
+    padding: 60px 0;
+}
+
+#login-section .row {
+    display: flex;
+    align-items: center;
+    gap: 40px;
+}
+
+#login-section .col-lg-5 {
+    flex: 1;
+    order: 1;
+}
+
+#login-section .col-lg-7 {
+    flex: 1.2;
+    order: 2;
+}
+
+#login-section .card {
+    max-width: 500px;
+    margin: 0 auto;
+    border-radius: 25px;
+    background: rgba(255, 255, 255, 0.75);
+    backdrop-filter: blur(15px);
+    overflow: hidden;
+}
+
+#login-section .card-body {
+    padding: 2rem;
+}
+
+#login-section .card-body .text-center img {
+    width: 80px;
+    height: 80px;
+    object-fit: cover;
+}
+
+#login-section .card-body h2 {
+    font-size: 1.5rem;
+    color: #1e293b;
+    margin-bottom: 0.5rem;
+}
+
+#login-section .card-body .text-muted {
+    color: #64748b !important;
+    font-size: 0.9rem;
+}
+
+#login-section input {
+    width: 100%;
+    padding: 12px 16px;
+    border: 1px solid #e2e8f0;
+    border-radius: 12px;
+    font-size: 1rem;
+    transition: all 0.3s;
+}
+
+#login-section input:focus {
+    outline: none;
+    border-color: #7C3AED;
+    box-shadow: 0 0 0 3px rgba(124, 58, 237, 0.1);
+}
+
+#login-section a {
+    text-decoration: none;
+}
+
+#login-section a.text-muted {
+    color: #64748b !important;
+}
+
+#login-section a.text-muted span {
+    color: #7C3AED !important;
+}
+
+#login-section .small {
+    font-size: 0.85rem;
+}
+
+/* ============================================ */
+/*         MEDIA QUERIES                        */
+/* ============================================ */
+
+/* Pantallas grandes (desktop) */
+@media (min-width: 1200px) {
+    .hero-title {
+        font-size: 4rem;
+    }
+    
+    .mockup-section {
+        gap: 40px;
+    }
+    
+    .phone {
+        width: 320px;
+        height: 600px;
+    }
+    
+    .phone.featured {
+        transform: scale(1.08);
+    }
+}
+
+/* Pantallas medianas (laptops) */
+@media (min-width: 992px) and (max-width: 1199px) {
+    .hero-title {
+        font-size: 3rem;
+    }
+    
+    .mockup-section {
+        gap: 25px;
+    }
+    
+    .phone {
+        width: 250px;
+        height: 500px;
+    }
+    
+    .contenedor-cajas {
+        grid-template-columns: repeat(4, 1fr) !important;
+    }
+}
+
+/* Tablets */
+@media (max-width: 991px) {
+    .hero-title {
+        font-size: 2.8rem;
+    }
+    
+    .mockup-section {
+        flex-wrap: wrap;
+        gap: 20px;
+    }
+    
+    .phone {
+        width: 220px;
+        height: 440px;
+    }
+    
+    .contenedor-cajas {
+        grid-template-columns: repeat(3, 1fr) !important;
+        gap: 15px !important;
+    }
+    
+    .caja {
+        min-height: 380px;
+        padding: 15px;
+    }
+    
+    .personaje {
+        height: 100px;
+    }
+    
+    #login-section .row {
+        flex-direction: column;
+    }
+    
+    #login-section .col-lg-5 {
+        order: 2;
+        text-align: center;
+    }
+    
+    #login-section .col-lg-7 {
+        order: 1;
+        margin-bottom: 30px;
+    }
+    
+    #login-section .card {
+        max-width: 450px;
+    }
+}
+
+/* Móviles */
+@media (max-width: 768px) {
+    .navbar .container {
+        flex-direction: column;
+        gap: 15px;
+    }
+    
+    .navbar .d-flex {
+        order: 3;
+    }
+    
+    .navbar-collapse {
+        order: 2;
+    }
+    
+    .hero-title {
+        font-size: 2.2rem;
+        text-align: center;
+    }
+    
+    .container .row.align-items-center {
+        text-align: center;
+    }
+    
+    .btn-menta {
+        display: inline-block;
+        margin-bottom: 30px;
+    }
+    
+    .card-glass {
+        margin-top: 30px;
+    }
+    
+    .contenedor-cajas {
+        grid-template-columns: repeat(2, 1fr) !important;
+        gap: 12px !important;
+        padding: 20px 15px;
+    }
+    
+    .caja {
+        min-height: 320px;
+        padding: 12px;
+    }
+    
+    .caja h3 {
+        font-size: 1rem;
+    }
+    
+    .caja p {
+        font-size: 0.85rem;
+    }
+    
+    .personaje {
+        height: 80px;
+    }
+    
+    .icono {
+        width: 45px;
+        height: 45px;
+        font-size: 18px;
+    }
+    
+    .adn-background .row {
+        flex-direction: column;
+        text-align: center;
+    }
+    
+    .adn-background .col-md-7 {
+        order: 2;
+    }
+    
+    .adn-background .col-md-5 {
+        order: 1;
+        margin-bottom: 20px;
+    }
+    
+    .titulo-principal h2 {
+        font-size: 24px;
+    }
+    
+    .titulo-principal p {
+        font-size: 14px;
+    }
+    
+    .mockup-section {
+        flex-direction: row;
+        justify-content: center;
+        gap: 12px;
+    }
+    
+    .phone {
+        width: 110px;
+        height: 220px;
+        border-width: 4px;
+    }
+    
+    .phone::before {
+        width: 35px;
+        height: 7px;
+        top: 5px;
+    }
+    
+    .phone.featured {
+        transform: scale(1.08);
+    }
+}
+
+/* Móviles pequeños */
+@media (max-width: 576px) {
+    .hero-title {
+        font-size: 1.8rem;
+    }
+    
+    .btn-menta {
+        padding: 10px 20px;
+        font-size: 14px;
+    }
+    
+    .card-glass {
+        padding: 20px;
+    }
+    
+    .stat-box h5 {
+        font-size: 14px;
+    }
+    
+    .contenedor-cajas {
+        grid-template-columns: repeat(2, 1fr) !important;
+        gap: 10px !important;
+        padding: 15px 10px;
+    }
+    
+    .caja {
+        min-height: 280px;
+        padding: 10px;
+        border-radius: 18px;
+    }
+    
+    .caja h3 {
+        font-size: 0.9rem;
+    }
+    
+    .caja p {
+        font-size: 0.75rem;
+    }
+    
+    .personaje {
+        height: 65px;
+    }
+    
+    .icono {
+        width: 40px;
+        height: 40px;
+        font-size: 16px;
+        margin-bottom: 10px;
+    }
+    
+    .titulo-principal h2 {
+        font-size: 20px;
+    }
+    
+    .adn-background {
+        min-height: 300px;
+    }
+    
+    #login-section .card-body {
+        padding: 1.5rem;
+    }
+    
+    #login-section .card-body h2 {
+        font-size: 1.3rem;
+    }
+    
+    #login-section input {
+        padding: 10px 14px;
+        font-size: 0.9rem;
+    }
+    
+    .btn-login-custom {
+        padding: 10px;
+        font-size: 0.9rem;
+    }
+    
+    .mockup-section {
+        gap: 8px;
+    }
+    
+    .phone {
+        width: 85px;
+        height: 180px;
+        border-radius: 20px;
+        border-width: 3px;
+    }
+    
+    .phone::before {
+        width: 25px;
+        height: 5px;
+    }
+    
+    footer {
+        padding: 30px 15px !important;
+    }
+    
+    footer h3 {
+        font-size: 1.5rem;
+    }
+    
+    footer p {
+        font-size: 12px;
+    }
+}
+
+/* Móviles muy pequeños */
+@media (max-width: 400px) {
+    .contenedor-cajas {
+        grid-template-columns: repeat(2, 1fr) !important;
+        gap: 8px !important;
+    }
+    
+    .caja {
+        min-height: 250px;
+    }
+    
+    .caja h3 {
+        font-size: 0.8rem;
+    }
+    
+    .caja p {
+        font-size: 0.7rem;
+    }
+    
+    .personaje {
+        height: 55px;
+    }
+    
+    .icono {
+        width: 35px;
+        height: 35px;
+        font-size: 14px;
+    }
+    
+    .mockup-section {
+        gap: 6px;
+    }
+    
+    .phone {
+        width: 75px;
+        height: 160px;
+        border-radius: 16px;
+    }
+    
+    .phone::before {
+        width: 20px;
+        height: 4px;
+    }
+}

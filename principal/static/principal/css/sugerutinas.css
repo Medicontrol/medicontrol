@@ -1,0 +1,378 @@
+:root {
+    --sidebar-width: 280px;
+    --cian: #0dcaf0;
+    --vibrant-purple: #7C3AED;
+    --dark-purple: #2d1b69;
+    --mid-purple: #3d2080;
+    --lila: #f3f0ff;
+    --lila-hover: #ede9ff;
+}
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    background-color: var(--dark-purple);
+    color: #f8fafc;
+    font-family: 'Inter', sans-serif;
+    overflow-x: hidden;
+}
+
+#sidebar {
+    width: var(--sidebar-width);
+    height: 100vh;
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 1000;
+    background-color: #211c4e9d;
+    backdrop-filter: blur(10px);
+    overflow-y: auto;
+    border-right: 5px solid #d5e0e2;
+    transition: transform 0.3s ease-in-out;
+}
+
+#sidebar .nav-item:not(:last-child) {
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    padding-bottom: 4px;
+    margin-bottom: 12px;
+}
+
+.main-content {
+    margin-left: var(--sidebar-width);
+    width: calc(100% - var(--sidebar-width));
+    padding: 40px;
+    min-height: 100vh;
+    background: #ffffff;
+    transition: margin-left 0.3s ease-in-out, width 0.3s ease-in-out;
+    overflow-x: hidden;
+    max-width: 100%;
+}
+
+.wave-container svg {
+    width: 100%;
+    height: auto;
+}
+
+.nav-link.text-primary {
+    color: var(--cian) !important;
+    border-bottom: 1px solid rgba(13, 202, 240, 0.1);
+    transition: 0.3s;
+}
+
+.nav-link.text-primary:hover {
+    background-color: rgba(13, 202, 240, 0.05);
+}
+
+.ficha {
+    background: var(--lila);
+    border-radius: 16px;
+    padding: 22px;
+    border-left: 5px solid #c4b5fd;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.25);
+    transition: all 0.3s ease;
+    height: 100%;
+}
+
+.ficha:hover {
+    transform: translateY(-3px);
+    background: var(--lila-hover);
+    box-shadow: 0 8px 25px rgba(45, 27, 105, 0.4);
+}
+
+.ficha h3 {
+    font-size: 15px;
+    font-weight: 700;
+    color: var(--dark-purple);
+    margin-bottom: 10px;
+}
+
+.ficha p {
+    font-size: 14px;
+    color: #4c3a8a;
+    margin-bottom: 0;
+}
+
+.ficha small {
+    color: #7c6aad;
+}
+
+.ficha.stock {
+    border-left-color: #ef4444;
+}
+
+.ficha.ok {
+    border-left-color: #22c55e;
+}
+
+.ficha.rutina {
+    border-left-color: var(--cian);
+}
+
+.stock-num {
+    font-weight: 800;
+    color: #ef4444;
+}
+
+.ficha.clima {
+    background: linear-gradient(135deg, #43e795 0%, #513cda 100%);
+    border-left: none;
+    border-radius: 16px;
+    color: white;
+    padding: 24px;
+}
+
+.ficha.clima h3 {
+    color: white;
+    opacity: 0.9;
+}
+
+.temp-grande {
+    font-size: 2.8rem;
+    font-weight: 800;
+    margin: 0;
+}
+
+#ver-clima {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.datos-derecha {
+    text-align: right;
+}
+
+.ficha.rutina img {
+    width: 80px;
+    display: block;
+    margin: 10px auto;
+}
+
+.btn-hamburger {
+    display: none;
+    position: fixed;
+    top: 15px;
+    left: 15px;
+    z-index: 1100;
+    background: var(--vibrant-purple);
+    border: none;
+    border-radius: 10px;
+    padding: 10px 12px;
+    cursor: pointer;
+    color: white;
+    font-size: 18px;
+    transition: background 0.2s;
+}
+
+.btn-hamburger:hover {
+    background: #6d28d9;
+}
+
+.overlay {
+    display: none;
+    position: fixed;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.5);
+    z-index: 999;
+    backdrop-filter: blur(2px);
+}
+
+@media (max-width: 992px) {
+    .btn-hamburger {
+        display: block;
+    }
+
+    #sidebar {
+        transform: translateX(-100%);
+        transition: 0.3s;
+        z-index: 1000;
+    }
+
+    #sidebar.abierto {
+        transform: translateX(0);
+    }
+
+    .overlay.activo {
+        display: block;
+    }
+
+    .main-content {
+        margin-left: 0 !important;
+        width: 100% !important;
+        padding: 20px;
+    }
+
+    .row.g-4 {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        gap: 15px;
+    }
+}
+
+@media (max-width: 768px) {
+    .main-content {
+        padding: 15px !important;
+    }
+
+    .main-content > .d-flex.justify-content-between.align-items-center {
+        flex-direction: column !important;
+        align-items: flex-start !important;
+        gap: 12px !important;
+        padding: 15px !important;
+    }
+
+    .main-content > .d-flex.justify-content-between.align-items-center > div:first-child {
+        width: 100%;
+    }
+
+    .main-content > .d-flex.justify-content-between.align-items-center > div:first-child h1 {
+        font-size: 1.3rem;
+    }
+
+    .main-content > .d-flex.justify-content-between.align-items-center > div:last-child {
+        width: 100%;
+        justify-content: center;
+    }
+
+    .main-content > .d-flex.justify-content-between.align-items-center > div:last-child span {
+        white-space: normal;
+        word-break: break-word;
+        text-align: center;
+    }
+
+    .row.g-4 {
+        grid-template-columns: 1fr;
+        gap: 12px;
+    }
+
+    #ver-clima {
+        flex-direction: column;
+        text-align: center;
+        gap: 15px;
+    }
+
+    .datos-derecha {
+        text-align: center;
+    }
+
+    .temp-grande {
+        font-size: 2rem;
+    }
+
+    .ficha {
+        padding: 18px;
+    }
+
+    .ficha h3 {
+        font-size: 14px;
+    }
+
+    .ficha p {
+        font-size: 13px;
+    }
+
+    .ficha.rutina img {
+        width: 60px;
+    }
+}
+
+@media (max-width: 576px) {
+    .main-content {
+        padding: 12px !important;
+    }
+
+    .main-content > .d-flex.justify-content-between.align-items-center > div:first-child h1 {
+        font-size: 1.1rem;
+    }
+
+    .main-content > .d-flex.justify-content-between.align-items-center > div:first-child small {
+        font-size: 0.7rem;
+    }
+
+    .main-content > .d-flex.justify-content-between.align-items-center > div:last-child {
+        padding: 5px 12px !important;
+    }
+
+    .main-content > .d-flex.justify-content-between.align-items-center > div:last-child span {
+        font-size: 0.75rem;
+    }
+
+    .main-content > .d-flex.justify-content-between.align-items-center > div:last-child img {
+        width: 30px !important;
+        height: 30px !important;
+    }
+
+    .ficha {
+        padding: 15px;
+    }
+
+    .ficha h3 {
+        font-size: 13px;
+    }
+
+    .ficha p {
+        font-size: 12px;
+    }
+
+    .temp-grande {
+        font-size: 1.5rem;
+    }
+
+    .ficha.rutina img {
+        width: 50px;
+    }
+
+    #ver-clima i {
+        font-size: 2rem;
+    }
+}
+
+@media (max-width: 400px) {
+    .main-content {
+        padding: 10px !important;
+    }
+
+    .ficha {
+        padding: 12px;
+    }
+
+    .ficha h3 {
+        font-size: 12px;
+    }
+
+    .ficha p {
+        font-size: 11px;
+    }
+
+    .temp-grande {
+        font-size: 1.3rem;
+    }
+}
+
+@media (hover: none) and (pointer: coarse) {
+    .btn-hamburger, .ficha {
+        cursor: pointer;
+    }
+}
+
+@supports not (backdrop-filter: blur(12px)) {
+    #sidebar {
+        background-color: #211c4e !important;
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+        scroll-behavior: auto !important;
+    }
+    .ficha:hover {
+        transform: none;
+    }
+}

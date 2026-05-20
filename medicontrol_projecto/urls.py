@@ -18,11 +18,26 @@ from django.contrib import admin
 from django.urls import path, include
 from django.conf import settings
 from django.conf.urls.static import static
-
+from django.http import HttpResponse
+import os
+ 
+# Vista que sirve el Service Worker directamente (sin redirección)
+# RedirectView no funciona para Service Workers — el navegador los rechaza
+def firebase_sw(request):
+    sw_path = os.path.join(
+        settings.BASE_DIR,
+        'principal', 'static', 'principal', 'js', 'firebase-messaging-sw.js'
+    )
+    with open(sw_path, 'r') as f:
+        content = f.read()
+    return HttpResponse(content, content_type='application/javascript')
+ 
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', include('principal.urls')),
+    path('firebase-messaging-sw.js', firebase_sw, name='firebase-messaging-sw.js'),
 ]
-
+ 
 if settings.DEBUG:
     urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+ 

@@ -1,0 +1,13 @@
+{
+  "type": "service_account",
+  "project_id": "medicontrol-fe869",
+  "private_key_id": "3cb7085b1c09553ed642abca8591f8b672e71ec9",
+  "private_key": "-----BEGIN PRIVATE KEY-----\nMIIEvQIBADANBgkqhkiG9w0BAQEFAASCBKcwggSjAgEAAoIBAQDjhIsw0SkHRE1M\nfmgB+kxoPPicAsVm/zSLzkPSpwNsiRMBxwxBwFe9eni3NVD3XQJe5ZywUMCpWp76\nCYKNgFjdPQvTj3h4eTn3U8zX6h5/8MMq58+RZy/1NEqYC00NcI4/aj0sXdLDG7Jf\ns82/sDSewwwMe7vzOYjMaq71Ep5mMUKrMO7ZVN3X1pT/tbNMw6c9Kc3ciHx5lqD/\nZNz75umK3FP7B3XLPGaVKWqy4E9WEqyVyIBR61+OXFp37Jec/3B9xumWr0j0toCx\nzTydKgwM7FtFKqsgJi0hR46NRTTjWWAhKvg2DiWSQR7+vqzc1d5KRnDwXXcYG2WN\nlYd4D5w/AgMBAAECggEAJ3G5N/NrK4lZ5WMc4Qrl6ER5zYJlet/P2lUeSQ0PeOei\n1fIOW+/exkjPWOPzb48+c/lW2vKFFFdTrIGtkp6nyWNmA32iIzDRLeHnZ599Pi0d\niPi7cbf0BozUSdvbtfLHlpLynBiAC7dni1P+3bbMyKGEGz3wbdCRuO7d+jsKHykj\nc42vNRXlmi4EcRuQYshXDW1QbI9Tl3mOZYGzuhd4X0DZJ7ouD6y/AW/AGuiSFprG\no53Lnjb3oKTO0fZ93c9qLSSM/+/chbhxIJd2WO43o5sXxAgZNbkRt+qzcD71VJLT\nP/uwA6azhhEmtOkBnS1kwZPw/8z2Mmco9kadd7iLUQKBgQD28Of/moj21LzW9DeY\n+PwkSjpgm6xiMgyBBYNY/U4I1suHVZ+3stClvN1Vvc22VAzLo5qsejaFVSD4LFwF\nmV1vFrkS4u24x2fwuFzXJxyfmM0bwcEnCsLQrflda5XjLAIhBRBJHgChxRtj1OdG\niqN6Qiqfeo1ZTwB/98AnL9UNFQKBgQDr3TpRMZ0Fm5nAOkRvLBAcZFlqxxtG3431\nRykuppu0y9TEV3ZNcUQVPiqcWvGW6JaXZSsvonl2sHUe/+AQf2+JKcw5d9lBdlTa\nH7qX1QgMYmVhJlDtzd4fuqFBsXhlx49O6JOhua0CdGd1uIQFs/WxbVkuKNjbyIij\nZrUphg3hAwKBgCyzCNu8xmQfuBsU0+eN0l5jTVPlefvAYYENVWxLVc/FycuylRm0\ndY46tLnrhIwnhLVr5Pipmqrh8PjbVsDwtPgB3fhsOWnENq1dQfj0LHs7No16shL2\nILOTelsNuXEIq03806jYlHaz7jRQ+phLSjI8PejmTyXGZinD1/V/9AnNAoGAZKQV\nCigdVBM826UBJl6q0TKQZNtobClfrVUb4Wf98Hs44j5foFPANUA9dlHn2/iKqTbl\n4oF1Souorf2IYgG+WcyX872L2j7fneMD/11K/d3OXFG5Hn9FVEySGjHbqbIpGAZt\nWAieJfn9W2HME5LiNz7tWqDbR4ydoPtmOb2VlnkCgYEAnCAQZH15qrVM1aWVrT2o\n1996CIFpeMPFUZhtnbHSQkDAMoLTayB+JsHzWAyEuFv4DA91MiY6Crx93fEDa0t7\nZpdOGUJ6hxcBHB/3z2tqZdkiP+y5Q5WvP8CmjbwQbG0tdxdX0wDNLJAMCRAh+Bvt\n0Wbx+QeH+VRGNJ4rFvrfjME=\n-----END PRIVATE KEY-----\n",
+  "client_email": "firebase-adminsdk-fbsvc@medicontrol-fe869.iam.gserviceaccount.com",
+  "client_id": "109320080504159688423",
+  "auth_uri": "https://accounts.google.com/o/oauth2/auth",
+  "token_uri": "https://oauth2.googleapis.com/token",
+  "auth_provider_x509_cert_url": "https://www.googleapis.com/oauth2/v1/certs",
+  "client_x509_cert_url": "https://www.googleapis.com/robot/v1/metadata/x509/firebase-adminsdk-fbsvc%40medicontrol-fe869.iam.gserviceaccount.com",
+  "universe_domain": "googleapis.com"
+}

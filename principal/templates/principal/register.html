@@ -1,150 +1,234 @@
 {% extends 'principal/base.html' %}
 
 {% block content %}
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
-
-<div class="container mt-5" >
-  <div class="row justify-content-center">
-    <div class="col-md-6">
-      <div class="card shadow-lg border-0">
-        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 320">
-                <path fill="#2A1C45" d="M0,256L30,250.7C60,245,120,235,180,197.3C240,160,300,96,360,101.3C420,107,480,181,540,197.3C600,213,660,171,720,154.7C780,139,840,149,900,138.7C960,128,1020,96,1080,101.3C1140,107,1200,149,1260,144C1320,139,1380,85,1410,58.7L1440,32L1440,0L1410,0C1380,0,1320,0,1260,0C1200,0,1140,0,1080,0C1020,0,960,0,900,0C840,0,780,0,720,0C660,0,600,0,540,0C480,0,420,0,360,0C300,0,240,0,180,0C120,0,60,0,30,0L0,0Z"></path>
-            </svg>
-        <div class="card-body p-5" >
-          <h2 class="text-center mb-4" style="color: #008080;">Registro de Usuario</h2>
-          <p class="text-center text-muted">Únete a MediControl para gestionar tus tratamientos.</p>
-          
-          <form method="POST" id="registerForm" action="{% url 'register' %}" enctype="multipart/form-data">
-            
-            {% csrf_token %}
+<div class="container mt-5">
+    <div class="row justify-content-center">
+        <div class="col-md-8 col-lg-6">
+            <div class="card shadow-lg border-0 rounded-4 overflow-hidden">
               
-        
-            
-            <div class="row">
-             
-              <div class="col-md-6 mb-3">
-                <label class="form-label font-weight-bold">Usuario</label>
-                <input type="text" class="form-control" name="username" placeholder="Ej: daniel123" required>
-              </div>
-              <div class="col-md-6 mb-3">
-                <label class="form-label font-weight-bold">Correo</label>
-                <input type="email" class="form-control" name="email" placeholder="correo@ejemplo.com" required>
-              </div>
-            </div>
+                <div class="card-header text-white text-center py-4" style="background: linear-gradient(135deg, #2A1C45 0%, #4a2a7a 100%); border: none;">
+                    <i class="fas fa-user-plus fa-3x mb-2"></i>
+                    <h2 class="fw-bold mb-0">Crear Cuenta</h2>
+                    <p class="opacity-75 mt-2 mb-0">Únete a MediControl y cuida tu salud</p>
+                </div>
+                
+                <div class="card-body p-4 p-lg-5" style="background: white;">
+                    <form method="POST" id="registerForm" action="{% url 'register' %}" enctype="multipart/form-data">
+                        {% csrf_token %}
 
-            <div class="mb-3">
-              <label class="form-label font-weight-bold">Contraseña</label>
-              <div class="input-group">
-                <input type="password" class="form-control" name="password1" id="password1" required>
-                <button type="button" class="btn btn-outline-secondary" id="togglePassword1">👁️</button>
-              </div>
-              <div class="progress mt-2" style="height: 8px;">
-                <div id="passwordStrengthBar" class="progress-bar" role="progressbar" style="width: 0%;"></div>
-              </div>
-              <small id="passwordStrengthText" class="form-text"></small>
-            </div>
+                      
+                        <div class="row g-3">
+                            <div class="col-md-6">
+                                <label class="form-label fw-bold text-dark">
+                                    <i class="fas fa-user me-2" style="color: #7C3AED;"></i>Usuario
+                                </label>
+                                <input type="text" class="form-control form-control-lg" name="username" placeholder="Ej: daniel123" required>
+                            </div>
+                            <div class="col-md-6">
+                                <label class="form-label fw-bold text-dark">
+                                    <i class="fas fa-envelope me-2" style="color: #7C3AED;"></i>Correo Electrónico
+                                </label>
+                                <input type="email" class="form-control form-control-lg" name="email" placeholder="correo@ejemplo.com" required>
+                            </div>
+                        </div>
 
-            <div class="mb-3">
-              <label class="form-label font-weight-bold">Confirmar Contraseña</label>
-              <div class="input-group">
-                <input type="password" class="form-control" name="password2" id="password2" required>
-                <button type="button" class="btn btn-outline-secondary" id="togglePassword2">👁️</button>
-              </div>
-              <small id="passwordError" class="text-danger font-weight-bold"></small>
-            </div>
+                        <div class="mt-3">
+                            <label class="form-label fw-bold text-dark">
+                                <i class="fas fa-lock me-2" style="color: #7C3AED;"></i>Contraseña
+                            </label>
+                            <div class="input-group">
+                                <input type="password" class="form-control form-control-lg" name="password1" id="password1" placeholder="Ingresa tu contraseña" required>
+                                <button type="button" class="btn btn-outline-secondary" id="togglePassword1" style="border-top-right-radius: 10px; border-bottom-right-radius: 10px;">
+                                    <i class="fas fa-eye"></i>
+                                </button>
+                            </div>
+                            <div class="progress mt-2" style="height: 6px; border-radius: 3px;">
+                                <div id="passwordStrengthBar" class="progress-bar" role="progressbar" style="width: 0%;"></div>
+                            </div>
+                            <small id="passwordStrengthText" class="form-text text-muted"></small>
+                        </div>
 
-            <div class="col-md-6 mb-3">
-                <label class="form-label font-weight-bold">Tu foto: </label>
-                <input type="file" class="form-control" name="foto" placeholder="sube tu archivo" required>
-              </div>
-            </div>
+                        
+                        <div class="mt-3">
+                            <label class="form-label fw-bold text-dark">
+                                <i class="fas fa-check-circle me-2" style="color: #7C3AED;"></i>Confirmar Contraseña
+                            </label>
+                            <div class="input-group">
+                                <input type="password" class="form-control form-control-lg" name="password2" id="password2" placeholder="Confirma tu contraseña" required>
+                                <button type="button" class="btn btn-outline-secondary" id="togglePassword2" style="border-top-right-radius: 10px; border-bottom-right-radius: 10px;">
+                                    <i class="fas fa-eye"></i>
+                                </button>
+                            </div>
+                            <small id="passwordError" class="text-danger fw-bold"></small>
+                        </div>
 
-            <div class="d-grid gap-2 mb-3">
-              <button type="submit" class="btn btn-success btn-lg">Registrarse ahora</button>
+                     
+                        <div class="mt-3">
+                            <label class="form-label fw-bold text-dark">
+                                <i class="fas fa-phone-alt me-2" style="color: #7C3AED;"></i>Número de teléfono
+                            </label>
+                            <input type="text" name="telefono" id="telefono" class="form-control form-control-lg" placeholder="+573001234567" required>
+                            <small class="text-muted">Indispensable incluir el "+" y código de país.</small>
+                        </div>
+
+                 
+                        <div class="mt-3">
+                            <label class="form-label fw-bold text-dark">
+                                <i class="fas fa-camera me-2" style="color: #7C3AED;"></i>Foto de perfil
+                            </label>
+                            <input type="file" class="form-control form-control-lg" name="foto" accept="image/*" required>
+                            <small class="text-muted">Sube una foto para personalizar tu perfil</small>
+                        </div>
+
+                    
+                        <div class="d-grid mt-4">
+                            <button type="submit" class="btn btn-lg fw-bold text-white" style="background: linear-gradient(135deg, #7C3AED 0%, #0dcaf0 100%); border: none; border-radius: 50px; padding: 12px;">
+                                <i class="fas fa-user-plus me-2"></i>Registrarse ahora
+                            </button>
+                        </div>
+
+                    
+                        <p class="text-center mt-4 mb-0">
+                            ¿Ya tienes una cuenta? 
+                            <a href="{% url 'index' %}" class="text-decoration-none fw-bold" style="color: #7C3AED;">Inicia sesión aquí</a>
+                        </p>
+                    </form>
+                </div>
             </div>
-            
-            <p class="text-center mt-3">
-                ¿Ya tienes una cuenta? <a href="{% url 'index' %}" style="color: #008080; text-decoration: none; font-weight: bold;">Inicia sesión aquí</a>
-            </p> <br>
-          </form>
         </div>
-      </div>
     </div>
-  </div>
 </div>
 
-<script>
-  const password1 = document.getElementById('password1');
-  const password2 = document.getElementById('password2');
-  const passwordError = document.getElementById('passwordError');
-  const form = document.getElementById('registerForm');
-  const strengthBar = document.getElementById('passwordStrengthBar');
-  const strengthText = document.getElementById('passwordStrengthText');
-
-  // Lógica para mostrar/ocultar contraseña
-  document.getElementById('togglePassword1').addEventListener('click', function () {
-    const type = password1.getAttribute('type') === 'password' ? 'text' : 'password';
-    password1.setAttribute('type', type);
-    this.textContent = type === 'password' ? '👁️' : '🙈';
-  });
-
-  document.getElementById('togglePassword2').addEventListener('click', function () {
-    const type = password2.getAttribute('type') === 'password' ? 'text' : 'password';
-    password2.setAttribute('type', type);
-    this.textContent = type === 'password' ? '👁️' : '🙈';
-  });
-
-  // Validar coincidencia 
-  password2.addEventListener('keyup', function () {
-    passwordError.textContent = (password1.value !== password2.value) ? '⚠ Las contraseñas no coinciden' : '';
-  });
-
-  password1.addEventListener('keyup', function () {
-    const val = password1.value;
-    let strength = 0;
-    if (val.length >= 6) strength++;
-    if (/[A-Z]/.test(val)) strength++;
-    if (/[0-9]/.test(val)) strength++;
-    if (/[@$!%*?&#]/.test(val)) strength++;
-
-    if (strength === 0) {
-      strengthBar.style.width = '0%'; strengthText.textContent = '';
-    } else if (strength <= 1) {
-      strengthBar.style.width = '33%'; strengthBar.className = 'progress-bar bg-danger'; strengthText.textContent = 'Contraseña débil';
-    } else if (strength == 2) {
-      strengthBar.style.width = '66%'; strengthBar.className = 'progress-bar bg-warning'; strengthText.textContent = 'Contraseña media';
-    } else {
-      strengthBar.style.width = '100%'; strengthBar.className = 'progress-bar bg-success'; strengthText.textContent = 'Contraseña fuerte';
-    }
-  });
-
-
-  form.addEventListener('submit', function (event) {
-    event.preventDefault();
-    if (password1.value !== password2.value) {
-      Swal.fire({
-        icon: 'error',
-        title: '¡Error!',
-        text: 'Las contraseñas no coinciden.',
-        confirmButtonColor: '#008080'
-      });
-      return;
+<style>
+    .form-control-lg {
+        border-radius: 10px;
+        border: 1px solid #e2e8f0;
+        transition: all 0.3s ease;
     }
     
-    Swal.fire({
-      title: '¿Confirmar registro?',
-      text: "Tus datos se guardarán en el sistema de MediControl.",
-      icon: 'question',
-      showCancelButton: true,
-      confirmButtonColor: '#28a745',
-      cancelButtonColor: '#d33',
-      confirmButtonText: 'Sí, registrarme',
-      cancelButtonText: 'Cancelar'
-    }).then((result) => {
-      if (result.isConfirmed) {
-        form.submit();
-      }
+    .form-control-lg:focus {
+        border-color: #7C3AED;
+        box-shadow: 0 0 0 3px rgba(124, 58, 237, 0.1);
+    }
+    
+    .btn-outline-secondary {
+        border-color: #e2e8f0;
+        background: white;
+    }
+    
+    .btn-outline-secondary:hover {
+        background: #f8f9fa;
+        border-color: #7C3AED;
+    }
+    
+    .card {
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+    
+    .card:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15) !important;
+    }
+    
+    .progress-bar {
+        transition: width 0.3s ease;
+    }
+</style>
+
+<script>
+    const password1 = document.getElementById('password1');
+    const password2 = document.getElementById('password2');
+    const passwordError = document.getElementById('passwordError');
+    const form = document.getElementById('registerForm');
+    const strengthBar = document.getElementById('passwordStrengthBar');
+    const strengthText = document.getElementById('passwordStrengthText');
+
+
+    document.getElementById('togglePassword1').addEventListener('click', function () {
+        const type = password1.getAttribute('type') === 'password' ? 'text' : 'password';
+        password1.setAttribute('type', type);
+        this.innerHTML = type === 'password' ? '<i class="fas fa-eye"></i>' : '<i class="fas fa-eye-slash"></i>';
     });
-  });
+
+    document.getElementById('togglePassword2').addEventListener('click', function () {
+        const type = password2.getAttribute('type') === 'password' ? 'text' : 'password';
+        password2.setAttribute('type', type);
+        this.innerHTML = type === 'password' ? '<i class="fas fa-eye"></i>' : '<i class="fas fa-eye-slash"></i>';
+    });
+
+   
+    password2.addEventListener('keyup', function () {
+        if (password1.value !== password2.value) {
+            passwordError.textContent = '⚠ Las contraseñas no coinciden';
+            password2.style.borderColor = '#ef4444';
+        } else {
+            passwordError.textContent = '';
+            password2.style.borderColor = '#e2e8f0';
+        }
+    });
+
+ 
+    password1.addEventListener('keyup', function () {
+        const val = password1.value;
+        let strength = 0;
+        if (val.length >= 6) strength++;
+        if (/[A-Z]/.test(val)) strength++;
+        if (/[0-9]/.test(val)) strength++;
+        if (/[@$!%*?&#]/.test(val)) strength++;
+
+        if (strength === 0) {
+            strengthBar.style.width = '0%';
+            strengthBar.className = 'progress-bar';
+            strengthText.textContent = '';
+        } else if (strength <= 1) {
+            strengthBar.style.width = '33%';
+            strengthBar.className = 'progress-bar bg-danger';
+            strengthText.innerHTML = '<i class="fas fa-exclamation-triangle me-1"></i>Contraseña débil';
+        } else if (strength == 2) {
+            strengthBar.style.width = '66%';
+            strengthBar.className = 'progress-bar bg-warning';
+            strengthText.innerHTML = '<i class="fas fa-chart-line me-1"></i>Contraseña media';
+        } else {
+            strengthBar.style.width = '100%';
+            strengthBar.className = 'progress-bar bg-success';
+            strengthText.innerHTML = '<i class="fas fa-check-circle me-1"></i>Contraseña fuerte';
+        }
+    });
+
+
+    form.addEventListener('submit', function (event) {
+        event.preventDefault();
+
+        if (password1.value !== password2.value) {
+            Swal.fire({
+                icon: 'error',
+                title: '¡Error!',
+                text: 'Las contraseñas no coinciden.',
+                confirmButtonColor: '#7C3AED',
+                background: '#0f172a',
+                color: '#fff'
+            });
+            return;
+        }
+        
+        Swal.fire({
+            title: '¿Confirmar registro?',
+            text: "Tus datos se guardarán en el sistema de MediControl.",
+            icon: 'question',
+            showCancelButton: true,
+            confirmButtonColor: '#7C3AED',
+            cancelButtonColor: '#ef4444',
+            confirmButtonText: '<i class="fas fa-check me-2"></i>Sí, registrarme',
+            cancelButtonText: '<i class="fas fa-times me-2"></i>Cancelar',
+            background: '#0f172a',
+            color: '#fff'
+        }).then((result) => {
+            if (result.isConfirmed) {
+                form.submit(); 
+            }
+        });
+    });
 </script>
 {% endblock %}
