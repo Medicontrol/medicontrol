@@ -16,7 +16,7 @@ self.addEventListener('push', function(event) {
     let title = 'MediControl 💊';
     let body  = 'Tienes una toma pendiente';
 
-    // Si viene payload de Firebase úsalo, si no usa el default
+
     if (event.data) {
         try {
             const data = event.data.json();
