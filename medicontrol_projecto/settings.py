@@ -11,11 +11,13 @@ https://docs.djangoproject.com/en/6.0/ref/settings/
 """"""
 Django settings for medicontrol_projecto project.
 """
+"""
+Django settings for medicontrol_projecto project.
+"""
 
 import os
 from pathlib import Path
 import dj_database_url
-
 
 BASE_DIR = Path(__file__).resolve().parent.parent
 
@@ -34,8 +36,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'principal',
-    
-    # Agregar estos para allauth (login con Google)
+
     'django.contrib.sites',
     'allauth',
     'allauth.account',
@@ -45,16 +46,14 @@ INSTALLED_APPS = [
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
+    'whitenoise.middleware.WhiteNoiseMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
-    # Agregar este para allauth
     'allauth.account.middleware.AccountMiddleware',
-    'django.middleware.security.SecurityMiddleware',
-    'whitenoise.middleware.WhiteNoiseMiddleware',
 ]
 
 ROOT_URLCONF = 'medicontrol_projecto.urls'
@@ -76,7 +75,6 @@ TEMPLATES = [
 ]
 
 WSGI_APPLICATION = 'medicontrol_projecto.wsgi.application'
-
 
 DATABASES = {
     'default': dj_database_url.config(
@@ -105,7 +103,12 @@ TIME_ZONE = 'America/Bogota'
 USE_I18N = True
 USE_TZ = False
 
+
 STATIC_URL = 'static/'
+STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
+STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
+
+
 MEDIA_URL = '/media/'
 MEDIA_ROOT = BASE_DIR / 'media'
 
@@ -151,8 +154,5 @@ SOCIALACCOUNT_PROVIDERS = {
     }
 }
 
-FIREBASE_CONFIG_PATH = os.path.join(BASE_DIR, 'firebase-auth.json')
 
-STATIC_URL = 'static/'
-STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
-STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
+FIREBASE_CONFIG_PATH = os.path.join(BASE_DIR, 'firebase-auth.json')
