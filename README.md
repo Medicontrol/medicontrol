@@ -62,6 +62,34 @@ y seguimiento familiar, mejorando así la calidad de vida de los pacientes.
 
 ---
 
+## Evidencias De Modulos 
+
+### Pantalla de inicio (Landing)
+![Landing](screenshots/landing.png)
+
+### Inicio de sesión
+![Login](screenshots/login.png)
+
+### Registro de usuario
+![Registro](screenshots/registro.png)
+
+### Panel de control (Dashboard)
+![Dashboard 1](screenshots/dashboard1.png)
+![Dashboard 2](screenshots/dashboard2.png)
+
+### Gestión de medicamentos
+![Tratamientos](screenshots/tratamientos.png)
+![Crear Dosis](screenshots/creardosis.png)
+
+### Historial
+![Historial](screenshots/historical.png)
+
+### Red familiar
+![Red Familiar](screenshots/red_familiar.png)
+
+### Sugerencias
+![Sugerencias](screenshots/sugerencias.png)
+---
 ##  Instrucciones de instalación
 
 ### 1. Clonar el repositorio
