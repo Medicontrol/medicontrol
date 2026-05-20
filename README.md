@@ -1,6 +1,6 @@
 # MediControl
 
-**Sistema de control de medicamentos con recordatorios, seguimiento familiar y sugerencias personalizadas**
+**Sistema de control de medicamentos con recordatorios, seguimiento familiar y sugerencias**
 
 ---
 ### Descripcion General
