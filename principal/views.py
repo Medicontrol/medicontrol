@@ -22,7 +22,6 @@ from django.db.models import Count
 from django.core.mail import send_mail
 from django.conf import settings
 from django.http import HttpResponse
-from django.core.management import call_commands
 from django.http import HttpResponse
 from django.core.management import call_command
 
