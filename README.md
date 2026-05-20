@@ -136,16 +136,19 @@ git clone https://github.com/Medicontrol/medicontrol.git
 cd medicontrol
 ```
 
-```bash
 ### 2. Crear y activar el entorno virtual
+```bash
+
 python -m venv env
 env\Scripts\activate
 ```
-```bash
 ### 3. Instalar Dependencias
-pip install -r requirements.txt
+```bash
 
+pip install -r requirements.txt
+```
 ### 4. Ejecutar Migraciones
+```bash
 python manage.py makemigrations
 python manage.py migrate
 
