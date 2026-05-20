@@ -70,21 +70,21 @@ git clone https://github.com/Medicontrol/medicontrol.git
 cd medicontrol
 
 
-##Crear y activar el entorno virtual
+### 2. Crear y activar el entorno virtual
 python -m venv env
 env\Scripts\activate
 
-##Instalar Dependencias
+### 3. Instalar Dependencias
 pip install -r requirements.txt
 
-##Ejecutar Migraciones
+### 4. Ejecutar Migraciones
 python manage.py makemigrations
 python manage.py migrate
 
-##Crear Super Usuario
+### 5. Crear Super Usuario
 python manage.py createsuperuser
 
-##Iniciar Servidor
+### 6. Iniciar Servidor
 python manage.py runserver
 
 
