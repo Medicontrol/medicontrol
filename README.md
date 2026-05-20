@@ -151,11 +151,13 @@ pip install -r requirements.txt
 ```bash
 python manage.py makemigrations
 python manage.py migrate
-
+```
 ### 5. Crear Super Usuario
+```bash
 python manage.py createsuperuser
-
+```
 ### 6. Iniciar Servidor
+```bash
 python manage.py runserver
 
 ```
