@@ -156,3 +156,4 @@ SOCIALACCOUNT_PROVIDERS = {
 
 
 FIREBASE_CONFIG_PATH = os.path.join(BASE_DIR, 'firebase-auth.json')
+SECURE_CROSS_ORIGIN_OPENER_POLICY = "same-origin-allow-popups"
