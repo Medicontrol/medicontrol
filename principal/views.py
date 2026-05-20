@@ -840,6 +840,7 @@ def test_email(request):
         return JsonResponse({'status': f'Error: {str(e)}'})
 
 
+
 def run_migrations(request):
     try:
         call_command('migrate', interactive=False)
