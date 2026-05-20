@@ -134,23 +134,30 @@ graph TD
 ```bash
 git clone https://github.com/Medicontrol/medicontrol.git
 cd medicontrol
-
+```
 
 ### 2. Crear y activar el entorno virtual
+```bash
+
 python -m venv env
 env\Scripts\activate
-
+```
 ### 3. Instalar Dependencias
-pip install -r requirements.txt
+```bash
 
+pip install -r requirements.txt
+```
 ### 4. Ejecutar Migraciones
+```bash
 python manage.py makemigrations
 python manage.py migrate
-
+```
 ### 5. Crear Super Usuario
+```bash
 python manage.py createsuperuser
-
+```
 ### 6. Iniciar Servidor
+```bash
 python manage.py runserver
 
 ```
