@@ -21,6 +21,10 @@ import requests
 from django.db.models import Count
 from django.core.mail import send_mail
 from django.conf import settings
+from django.http import HttpResponse
+from django.core.management import call_commands
+from django.http import HttpResponse
+from django.core.management import call_command
 
 
 path_json = os.path.join(settings.BASE_DIR, 'firebase-auth.json')
@@ -837,6 +841,9 @@ def test_email(request):
 
 
 def run_migrations(request):
-    from django.core.management import call_command
-    call_command('migrate', interactive=False)
-    return HttpResponse("Migraciones ejecutadas")
+    try:
+        call_command('migrate', interactive=False)
+        call_command('collectstatic', interactive=False)
+        return HttpResponse(" Migraciones y archivos estáticos configurados correctamente")
+    except Exception as e:
+        return HttpResponse(f" Error: {str(e)}")
