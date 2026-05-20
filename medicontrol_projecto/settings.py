@@ -12,6 +12,7 @@ https://docs.djangoproject.com/en/6.0/ref/settings/
 Django settings for medicontrol_projecto project.
 """
 
+import os
 from pathlib import Path
 
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -144,3 +145,5 @@ SOCIALACCOUNT_PROVIDERS = {
         }
     }
 }
+
+FIREBASE_CONFIG_PATH = os.path.join(BASE_DIR, 'firebase-auth.json')
