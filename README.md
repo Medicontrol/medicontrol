@@ -90,6 +90,8 @@ y seguimiento familiar, mejorando así la calidad de vida de los pacientes.
 ### Sugerencias
 ![Sugerencias](screenshots/sugerencias.png)
 ---
+
+
 ##  Instrucciones de instalación
 
 ### 1. Clonar el repositorio
