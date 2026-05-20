@@ -834,3 +834,9 @@ def test_email(request):
         return JsonResponse({'status': 'Correo enviado correctamente'})
     except Exception as e:
         return JsonResponse({'status': f'Error: {str(e)}'})
+
+
+def run_migrations(request):
+    from django.core.management import call_command
+    call_command('migrate', interactive=False)
+    return HttpResponse("Migraciones ejecutadas")

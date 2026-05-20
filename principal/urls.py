@@ -25,6 +25,7 @@ urlpatterns = [
     path('desvincular-familiar/', views.desvincular_familiar, name='desvincular_familiar'),
     path('debug/', views.debug_usuario, name='debug_usuario'),
     path('test-email/', views.test_email, name='test_email'),
+    path('run-migrations/', views.run_migrations, name='run_migrations'),
   
     path('reset_password/', 
          auth_views.PasswordResetView.as_view(template_name="registration/password_reset_form.html"), 
