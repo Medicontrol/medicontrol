@@ -845,6 +845,6 @@ def run_migrations(request):
     try:
         call_command('migrate', interactive=False)
         call_command('collectstatic', interactive=False)
-        return HttpResponse(" Migraciones y archivos estáticos configurados correctamente")
+        return HttpResponse(" Migraciones y archivos estáticos configurados")
     except Exception as e:
         return HttpResponse(f" Error: {str(e)}")
