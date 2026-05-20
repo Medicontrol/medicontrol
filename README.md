@@ -134,12 +134,14 @@ graph TD
 ```bash
 git clone https://github.com/Medicontrol/medicontrol.git
 cd medicontrol
+```
 
-
+```bash
 ### 2. Crear y activar el entorno virtual
 python -m venv env
 env\Scripts\activate
-
+```
+```bash
 ### 3. Instalar Dependencias
 pip install -r requirements.txt
 
