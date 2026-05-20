@@ -82,7 +82,7 @@ y seguimiento familiar, mejorando así la calidad de vida de los pacientes.
 ![Crear Dosis](screenshots/creardosis.png)
 
 ### Historial
-![Historial](screenshots/historical.png)
+![Historial](screenshots/historial.png)
 
 ### Red familiar
 ![Red Familiar](screenshots/red_familiar.png)
@@ -90,7 +90,43 @@ y seguimiento familiar, mejorando así la calidad de vida de los pacientes.
 ### Sugerencias
 ![Sugerencias](screenshots/sugerencias.png)
 ---
+##  Diagrama de flujo del sistema
 
+```mermaid
+graph TD
+    A[Usuario] --> B{¿Tiene cuenta?}
+    B -->|No| C[Registrarse]
+    B -->|Sí| D[Iniciar Sesión]
+    
+    C --> E[Dashboard Principal]
+    D --> E
+    
+    E --> F[Gestión de Medicamentos]
+    E --> G[Historial]
+    E --> H[Red Familiar]
+    E --> I[Sugerencias]
+    
+    F --> F1[Agregar Medicamento]
+    F --> F2[Editar Medicamento]
+    F --> F3[Eliminar Medicamento]
+    
+    F1 --> J[Programar Horario]
+    J --> K[Recordatorios]
+    
+    K --> L[WhatsApp]
+    K --> M[Telegram]
+    K --> N[Push Notification]
+    
+    G --> G1[Ver tomas registradas]
+    G --> G2[Filtrar por fecha]
+    G --> G3[Exportar PDF]
+    
+    H --> H1[Vincular Familiar]
+    H --> H2[Ver historial familiar]
+    
+    I --> I1[Ver clima]
+    I --> I2[Alertas stock bajo]
+```
 
 ##  Instrucciones de instalación
 
