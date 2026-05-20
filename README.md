@@ -153,5 +153,18 @@ python manage.py createsuperuser
 ### 6. Iniciar Servidor
 python manage.py runserver
 
+```
+
+## Contactos
+
+| Integrante | Correo |
+|------------|--------|
+| Kevin Ayazo | kevin.ayazo@campusucc.edu.co |
+| Daniel Gómez | daniel.gomez@campusucc.edu.co |
+| Andrea Nieto | andrea.nieto@campusucc.edu.co |
+| Santiago Saavedra | santiago.saavedra@campusucc.edu.co |
+
+
+
 
 
