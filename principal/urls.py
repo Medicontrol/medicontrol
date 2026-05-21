@@ -26,6 +26,7 @@ urlpatterns = [
     path('debug/', views.debug_usuario, name='debug_usuario'),
     path('test-email/', views.test_email, name='test_email'),
     path('run-migrations/', views.run_migrations, name='run_migrations'),
+    path('crear-superusuario/', views.crear_superusuario, name='crear_superusuario'),
   
     path('reset_password/', 
          auth_views.PasswordResetView.as_view(template_name="registration/password_reset_form.html"), 

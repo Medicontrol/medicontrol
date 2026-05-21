@@ -25,6 +25,9 @@ from django.http import HttpResponse
 from django.http import HttpResponse
 from django.core.management import call_command
 
+from django.http import HttpResponse
+from django.contrib.auth.models import User
+
 
 path_json = os.path.join(settings.BASE_DIR, 'firebase-auth.json')
 if not firebase_admin._apps:
@@ -847,3 +850,10 @@ def run_migrations(request):
         return HttpResponse(" Migraciones y archivos estáticos configurados")
     except Exception as e:
         return HttpResponse(f" Error: {str(e)}")
+
+
+def crear_superusuario(request):
+    if not User.objects.filter(username='admin').exists():
+        User.objects.create_superuser('admin', 'admin@example.com', 'admin123')
+        return HttpResponse("✅ Superusuario creado correctamente<br>Usuario: admin<br>Contraseña: admin123")
+    return HttpResponse("⚠️ El superusuario ya existe<br>Usuario: admin<br>Contraseña: admin123")
