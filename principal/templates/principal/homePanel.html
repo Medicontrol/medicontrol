@@ -438,8 +438,7 @@
         </div>
     </div>
 </div>
-
-
+<!-- Charts y gráficos -->
 <script>
     const rendimiento = parseInt("{{ rendimiento }}");
     const ctxGauge = document.getElementById('gaugeAdherencia').getContext('2d');
@@ -495,13 +494,9 @@
 
 {% if messages %}
     {% for message in messages %}
-
         <script>
-
             const tipo = "{{ message.tags }}";
-
             if (tipo === "error") {
-
                 Swal.fire({
                     title: '⏰ Espera un poco',
                     text: "{{ message }}",
@@ -511,9 +506,7 @@
                     background: '#0f172a',
                     color: '#22D3EE',
                 });
-
             } else {
-
                 Swal.fire({
                     title: '¡LOGRADO!',
                     text: "{{ message }}",
@@ -526,17 +519,14 @@
                     color: '#22D3EE',
                     backdrop: 'rgba(124,58,237,0.2)'
                 });
-
             }
-
         </script>
-
     {% endfor %}
 {% endif %}
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 
-
+<!-- Modal Posponer -->
 <script>
     let medIdPosponer = null;
     const modalPosponer = new bootstrap.Modal(document.getElementById('modalPosponer'));
@@ -575,9 +565,10 @@
     }
 </script>
 
-
+<!-- Firebase - SOLO UNA VEZ -->
 <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-app-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-messaging-compat.js"></script>
+
 <script>
     firebase.initializeApp({
         apiKey: "AIzaSyAHJJDiKPr53RPiPo7sNuHZ3TSF8CQRRIk",
@@ -589,28 +580,25 @@
     });
     const messaging = firebase.messaging();
 
-async function solicitarPermiso() {
-    if (await Notification.requestPermission() !== 'granted') return;
-    try {
-      
-        const reg = await navigator.serviceWorker.register('/firebase-messaging-sw.js');
-        await navigator.serviceWorker.ready;
-
-   
-        const token = await messaging.getToken({
-            vapidKey: 'BAvbpirdYLqeskRtjKcx28y1egucV4JbKcHm5zGgpuVVFwwRqy_7GmjzZMZL2u_PxsjZT5RqsRw-tWdXPXxSESE',
-            serviceWorkerRegistration: reg
-        });
-        if (token) {
-            console.log('Token FCM obtenido:', token);
-            fetch('/guardar-token/', {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json', 'X-CSRFToken': '{{ csrf_token }}' },
-                body: JSON.stringify({ token })
+    async function solicitarPermiso() {
+        if (await Notification.requestPermission() !== 'granted') return;
+        try {
+            const reg = await navigator.serviceWorker.register('/firebase-messaging-sw.js');
+            await navigator.serviceWorker.ready;
+            const token = await messaging.getToken({
+                vapidKey: 'BAvbpirdYLqeskRtjKcx28y1egucV4JbKcHm5zGgpuVVFwwRqy_7GmjzZMZL2u_PxsjZT5RqsRw-tWdXPXxSESE',
+                serviceWorkerRegistration: reg
             });
-        }
-    } catch (err) { console.error('Error FCM:', err); }
-}
+            if (token) {
+                console.log('Token FCM obtenido:', token);
+                fetch('/guardar-token/', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json', 'X-CSRFToken': '{{ csrf_token }}' },
+                    body: JSON.stringify({ token })
+                });
+            }
+        } catch (err) { console.error('Error FCM:', err); }
+    }
 
     messaging.onMessage(({ notification: { title, body } }) => {
         Swal.fire({
@@ -621,40 +609,37 @@ async function solicitarPermiso() {
         });
     });
 
- function verificarTomasPendientes() {
-    fetch('/verificar-tomas/', { 
-        headers: { 'X-CSRFToken': '{{ csrf_token }}' } 
-    })
-    .then(r => r.json())
-    .then(d => { 
-        if (d.notificaciones_enviadas > 0) {
-            console.log(`✅ ${d.notificaciones_enviadas} notif`);
-            if (d.mensaje) {
-                Swal.fire({
-                    title: d.titulo,
-                    text: d.mensaje,
-                    icon: 'info',
-                    confirmButtonText: 'Entendido',
-                    confirmButtonColor: '#7C3AED',
-                    background: '#0f172a',
-                    color: '#22D3EE',
-                    timer: 8000,
-                    timerProgressBar: true,
-                });
+    function verificarTomasPendientes() {
+        fetch('/verificar-tomas/', { 
+            headers: { 'X-CSRFToken': '{{ csrf_token }}' } 
+        })
+        .then(r => r.json())
+        .then(d => { 
+            if (d.notificaciones_enviadas > 0) {
+                console.log(`✅ ${d.notificaciones_enviadas} notif`);
+                if (d.mensaje) {
+                    Swal.fire({
+                        title: d.titulo,
+                        text: d.mensaje,
+                        icon: 'info',
+                        confirmButtonText: 'Entendido',
+                        confirmButtonColor: '#7C3AED',
+                        background: '#0f172a',
+                        color: '#22D3EE',
+                        timer: 8000,
+                        timerProgressBar: true,
+                    });
+                }
             }
-        }
-    });
-}
+        });
+    }
 
-solicitarPermiso();
-verificarTomasPendientes();
-setInterval(verificarTomasPendientes, 20000);
+    solicitarPermiso();
+    verificarTomasPendientes();
+    setInterval(verificarTomasPendientes, 20000);
 </script>
 
-
-
-
-
+<!-- Boxes animados -->
 <script>
     const boxes = document.querySelectorAll('.box');
     let actual = 0;
@@ -665,40 +650,42 @@ setInterval(verificarTomasPendientes, 20000);
     }, 200);
 </script>
 
+<!-- Registro dormir/despertar -->
 <script>
     function registrarDormir() {
-    fetch('/registrar-dormir/', {
-        method: 'POST',
-        headers: { 'X-CSRFToken': '{{ csrf_token }}' }
-    })
-    .then(r => r.json())
-    .then(data => {
-        Swal.fire({
-            title: ' ¡Buenas noches!',
-            text: `Hora registrada: ${data.hora}`,
-            confirmButtonColor: '#7C3AED',
-            background: '#0f172a', color: '#f1f5f9',
-        }).then(() => location.reload());
-    });
-}
+        fetch('/registrar-dormir/', {
+            method: 'POST',
+            headers: { 'X-CSRFToken': '{{ csrf_token }}' }
+        })
+        .then(r => r.json())
+        .then(data => {
+            Swal.fire({
+                title: ' ¡Buenas noches!',
+                text: `Hora registrada: ${data.hora}`,
+                confirmButtonColor: '#7C3AED',
+                background: '#0f172a', color: '#f1f5f9',
+            }).then(() => location.reload());
+        });
+    }
 
-function registrarDespertar() {
-    fetch('/registrar-despertar/', {
-        method: 'POST',
-        headers: { 'X-CSRFToken': '{{ csrf_token }}' }
-    })
-    .then(r => r.json())
-    .then(data => {
-        Swal.fire({
-            title: ' ¡Buenos días!',
-            text: `Dormiste ${data.horas}h y ${data.minutos}min`,
-            confirmButtonColor: '#7C3AED',
-            background: '#0f172a', color: '#f1f5f9',
-        }).then(() => location.reload());
-    });
-}
+    function registrarDespertar() {
+        fetch('/registrar-despertar/', {
+            method: 'POST',
+            headers: { 'X-CSRFToken': '{{ csrf_token }}' }
+        })
+        .then(r => r.json())
+        .then(data => {
+            Swal.fire({
+                title: ' ¡Buenos días!',
+                text: `Dormiste ${data.horas}h y ${data.minutos}min`,
+                confirmButtonColor: '#7C3AED',
+                background: '#0f172a', color: '#f1f5f9',
+            }).then(() => location.reload());
+        });
+    }
 </script>
 
+<!-- Sidebar toggle -->
 <script>
     function toggleSidebar() {
         document.getElementById('sidebar').classList.toggle('abierto');
